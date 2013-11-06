@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">appmart sample code</string>
+    <string name="hello_world">appmart内部課金システムのサンプルコードです。</string>
+    <string name="button_value">課金システムへアクセス</string>
+    <string name="action_settings">Settings</string>
+    <string name="success">決済が確認されました！</string>
+
+</resources>
