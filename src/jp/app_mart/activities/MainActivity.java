@@ -102,7 +102,7 @@ public class MainActivity extends Activity {
 		Intent i = new Intent();
 		i.setClassName(APP_PACKAGE, APP_PATH);
 		if (mContext.getPackageManager().queryIntentServices(i, 0).isEmpty()) {
-			debugMess("appMartがインストールされていません。");
+			debugMess(getString(R.string.no_appmart_installed));
 			return;
 		}
 
@@ -114,7 +114,7 @@ public class MainActivity extends Activity {
 				//Ｓｅｒｖｉｃｅクラスをインスタンス化
 				service = AppmartInBillingInterface.Stub.asInterface((IBinder) boundService);
 				isConnected = true;
-				debugMess("appmartサービスの接続が成功しました。");
+				debugMess(getString(R.string.appmart_connection_success));
 			}
 			//切断時実行
 			public void onServiceDisconnected(ComponentName name) {
@@ -127,7 +127,7 @@ public class MainActivity extends Activity {
 			bindService(i, mConnection, Context.BIND_AUTO_CREATE);
 		} catch (Exception e) {
 			e.printStackTrace();
-			debugMess("サービス接続できませんでした。");
+			debugMess(getString(R.string.appmart_connection_not_possible));
 		}
 
 		// Handler初期化
@@ -141,18 +141,17 @@ public class MainActivity extends Activity {
 					accessPaymentPage();
 					break;
 				case 2:// パラメータNG
-					debugMess("渡されたパラメータが正しくありません。");
+					debugMess(getString(R.string.wrong_parameters));
 					break;
 				case 3:// 例外発生
-					debugMess("例外が発生しました。");
+					debugMess(getString(R.string.exception_occured));
 					break;
 				case 10:// 決済最終確認完了					
 					TextView success = (TextView) findViewById(R.id.success_tv);
-					success.setVisibility(View.VISIBLE);
-					
+					success.setVisibility(View.VISIBLE);					
 					break;
 				case -10:// 決済最終確認エラー
-					debugMess("決済確認とれませんでした。");
+					debugMess(getString(R.string.settlement_not_confirmed));
 					break;
 				}
 
@@ -169,7 +168,7 @@ public class MainActivity extends Activity {
 				//接続状態の確認
 				if (isConnected) {
 
-					debugMess("情報取得開始・・・");
+					debugMess(getString(R.string.start_information_handle));
 
 					(new Thread(new Runnable() {
 						public void run() {
@@ -264,10 +263,11 @@ public class MainActivity extends Activity {
 
 			try {
 
-				debugMess("決済が確認されました。");
+				debugMess(getString(R.string.settlement_confirmed));
 
 				// 決済ＩＤを取得
 				transactionId = arg1.getExtras().getString(SERVICE_ID);
+				
 				// 継続決済の場合は次回決済ＩＤを取得
 				nextTransactionId = arg1.getExtras().getString(SERVICE_NEXT_ID);
 
@@ -339,7 +339,7 @@ public class MainActivity extends Activity {
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			strEncryInfoData = "";
-			debugMess("暗号化は失敗しました。");
+			debugMess(getString(R.string.data_encryption_failed));
 		}
 
 		return strEncryInfoData.replaceAll("(\\r|\\n)", "");
