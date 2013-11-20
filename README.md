@@ -1,7 +1,8 @@
 inBillingSampleOnePage
 ======================
 
-Appmartアプリ内課金システムのサンプルコードです。
+Appmartアプリ内課金システムのサンプルコードです。簡単にAppmartのアプリ内決済システムをご利用いただけます。
+実装に関するご質問ございましたら、お問い合わせください。
 
 
 #### カスタマイズしなければならないパラメータ
@@ -43,7 +44,7 @@ if (mContext.getPackageManager().queryIntentServices(i, 0).isEmpty()) {
  
  * ServiceConnectionオブジェクトを用意
  
-   ```
+```
 ServiceConnection mConnection = new ServiceConnection() {
 	//接続時実行
 	public void onServiceConnected(ComponentName name,
@@ -61,18 +62,19 @@ ServiceConnection mConnection = new ServiceConnection() {
 ```
  
  * ボタンと連動するするhandlerを定義
+
 ```
 //決済用
 handler = new Handler() {
    public void handleMessage(Message msg) {
-   ...
+	。　。　。
    }
 }
 
 //管理されているサービスの購入状況
 handlerCheck = new Handler() {
    public void handleMessage(Message msg) {
-   ...
+	。　。　。
    }
 }
 ```
@@ -83,13 +85,13 @@ handlerCheck = new Handler() {
 //決済用ボタン
 Button paymentButton = (Button) findViewById(R.id.access_payment);
 paymentButton.setOnClickListener(new OnClickListener() {
-　　　...
+	。　。　。
 }
 
 //管理されているサービスの購入状況用
 Button historyButton = (Button) findViewById(R.id.access_payment);
 paymentButton.setOnClickListener(new OnClickListener() {
-　　　...
+	。　。　。
 }
 ```
 
