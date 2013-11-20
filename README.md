@@ -29,6 +29,8 @@ APPMART_APP_ID = "your_application_id";
 public static final String APPMART_SERVICE_ID = "your_service_id";
 ```
 
+
+
 #### 本プロジェクトの大まかな流れ：
 
 
@@ -100,7 +102,9 @@ paymentButton.setOnClickListener(new OnClickListener() {
 }
 ```
 
-#### Appmart課金システムとの連動
+
+
+#### Appmart課金システムとの具体的な連動
 
  * アプリとAppmartを連動させるために、先ずはバインドを行います
  
@@ -114,7 +118,8 @@ service = AppmartInBillingInterface.Stub.asInterface((IBinder) boundService);
 isConnected = true;
 ```
 
-この時点ではAppmartの課金決済サービスと連動しており、AIDLインタフェースの各メッソードを呼ぶことができます。
+> この時点ではAppmartの課金決済サービスと連動しており、AIDLインタフェースの各メッソードを呼ぶことができます。
+
 
  * 決済を行う際には必要なパラメータを暗号化し、【prepareForBillingService】メッソードに渡します。
  
@@ -130,7 +135,8 @@ Bundle bundleForPaymentInterface = service.prepareForBillingService(APPMART_APP_
 > 【createEncryptedData】メッソードはクラスの一番下にありますので、ご参考ください。
 
 
-【prepareForBillingService】メッソードからreturnされるBundleを確認します。【resultCode】コードは1でしたら、　BundleのPendingIntentオブジェクトをインスタンス化して、実行します。
+【prepareForBillingService】メッソードからreturnされるBundleを確認します。【resultCode】コードは1でしたら、　BundleのPendingIntentオブジェクトをインスタンス化し、実行します。
+
 
  * 【PendingIntent】の実行
  
@@ -140,6 +146,7 @@ pIntent.send(mContext, 0, new Intent());
 ```
 
 PendingIntentを送信すると、Appmartアプリが起動し、決済画面が表示されます。エンドユーザーにデータ入力して、決済を行います。決済が完了になりましたら、Broadcastを送信し、Appmartアプリが終了し、アプリに戻ります。
+
 
  * Broadcast情報を取得
 
@@ -151,6 +158,7 @@ nextTransactionId = arg1.getExtras().getString(SERVICE_NEXT_ID);
 
 //エンドユーザーにコンテンツを提供
 ```
+
 
  * 最後に決済を確認します
  
