@@ -1,4 +1,4 @@
-Appmart　アプリ内課金　 決済サンプル
+Appmart　アプリ内課金
 ======================
 
 Appmartアプリ内課金システムのサンプルコードです。このサンプールをfork・cloneしていただき、自由にご利用ください。 (apache 2.0ライセンス)
@@ -23,7 +23,7 @@ Pull requestも可能です。
 ---
 
 
-#### 引数の設定
+## 引数の設定
 
 下記引数を直してください。 (src/activities/MainActivity.java)
 
