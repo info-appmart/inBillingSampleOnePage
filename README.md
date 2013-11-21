@@ -262,6 +262,7 @@ int res = service.confirmFinishedTransaction(
 | 1   | appId         | 8 － 30 | 登録済みのアプリID                       |
 | 2   | encryptedData | 指定なし  | サービスID, ディベロッパーID等を暗号化したデータ    |
 
+> 暗号化パラメータの詳細はcreateEncryptedDataメッソードをご確認ください。
 
 ■■　戻り値:
 
@@ -274,6 +275,46 @@ int res = service.confirmFinishedTransaction(
 
 
 
+
+
+
+###### 　getServiceDetails
+
+■■　引数:
+
+| No  | 項目名                     | 属性        |  説明                                                                            |
+| --- |:-------------:| ------ | ------------------------------------ |
+| 1   | appId         | 8 － 30 | 登録済みのアプリID                       |
+| 2   | encryptedData | 指定なし  | サービスID, ディベロッパーID等を暗号化したデータ    |
+
+> 暗号化パラメータの詳細はcreateEncryptedDataメッソードをご確認ください。
+
+
+■■　戻り値:
+
+| No  | 項目名               | サブ項目名        | 説明                                                                               |
+| --- |:----------: | ---------- |--------------------------------------|
+| 1   | Result_code | -          |  1== OK  55=暗号化データエラー   90=例外発生  |
+| 2   | Application | developId  |  ディベロッパーID                         |
+| 3   |             | serviceId  |  サービスID                             |
+| 4   |             | serviceName|  サービス名                                                                    |
+| 5   |             | DiscountAmount|  Appmartでの販売価格 (セール期間考慮済み)  |
+| 6   |             | exp|  サービス説明                                                                  |
+| 7   |             | policy|  サービスのポリシー                                                                 |
+| 8   |             | appName|  アプリ名                                                                 |
+| 9   |             | setlCrcy|  通貨                                                                |
+| 10   |             | SetlType|  販売タイプ   0=都度　1=月額課金                                                                |
+| 11   |             | MonthCycle|  月サイクル                                                                |
+| 12   |             | DayCycle|  日サイクル                                                                |
+| 13   |             | CntCycle|  継続回数                                                                |
+| 14   |             | discountStartDt|  割引開始日                                                                |
+| 15   |             | discountEndDt|  割引終了日                                                                |
+| 16   |             | discountRate|  割引率                                                                |
+| 17   |             | logoImagePath|  ロゴファイル名                                                                |
+| 18   |             | SetlType|  販売タイプ 0=都度　 1==月額課金                                                                |
+| 19   |             | Price|  定価                                                            |
+
+>  nullの場合、接続エラーが発生します。Bundle.getInt(“resultCode”) == 90 の場合は【Msg】もリターンされます（1= アプリIDエラー, 90=暗号化データエラー）
 
 
 
