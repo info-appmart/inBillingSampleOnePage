@@ -15,10 +15,13 @@ Pull requestも可能です。
 | 決済実行処理         | 継続                        | 管理対象外|
 
 
+
+
 > 管理されているサービスに関しまして、ソースコードをご確認ください。
 
 
 ---
+
 
 #### 引数の設定
 
@@ -43,6 +46,7 @@ public static final String APPMART_SERVICE_ID = "your_service_id";
 
 
 ---
+
 
 #### 本プロジェクトの大まかな流れ：
 
@@ -91,7 +95,7 @@ interface AppmartInBillingInterface {
  
 これからの修正はMainActivityクラス内に行います。
  
-決済画面からアプリに戻る際に、Broadcastが発信されるため、ReceiverBroadcastを用意します。
+決済画面からアプリに戻る際に、Broadcastが発信されるため、ReceiverBroadcastをRegisterします。
 
 ```
 setReceiver();
@@ -104,7 +108,7 @@ private void setReceiver() {
 ``` 
 
 
- * Appmartアプリに接続し、インストール状態を確認します
+ * Appmartアプリに接続し、インストール状態を確認:
  
 ```
 Intent i = new Intent();
@@ -116,7 +120,7 @@ if (mContext.getPackageManager().queryIntentServices(i, 0).isEmpty()) {
 ```
  
  
- * ServiceConnectionオブジェクトを用意
+ * ServiceConnectionオブジェクトを用意:
  
 RemoteServiceのため、ServiceConnectionインタフェースを実装しなければなりません。継承メッソードはonServiceConnected（接続時のcallback）とonServiceDisconnected（切断持のcallback）です。
  
@@ -125,7 +129,6 @@ ServiceConnection mConnection = new ServiceConnection() {
 	//接続時実行
 	public void onServiceConnected(ComponentName name,
 			IBinder boundService) {
-		//Ｓｅｒｖｉｃｅクラスをインスタンス化
 		service = AppmartInBillingInterface.Stub.asInterface((IBinder) boundService);
 		isConnected = true;
 		debugMess(getString(R.string.appmart_connection_success));
@@ -145,7 +148,7 @@ ServiceConnection mConnection = new ServiceConnection() {
 ```
 handler = new Handler() {
    public void handleMessage(Message msg) {
-	。　。　。
+	//処理はここに入ります
    }
 }
 ```
@@ -158,7 +161,7 @@ handler = new Handler() {
 
 Button paymentButton = (Button) findViewById(R.id.access_payment);
 paymentButton.setOnClickListener(new OnClickListener() {
-	//説明は下にあります
+	//処理はここに入ります
 }
 ```
 
@@ -168,13 +171,17 @@ paymentButton.setOnClickListener(new OnClickListener() {
 
 #### Appmart課金システムとの具体的な連動
 
- * アプリとAppmartを連動させるために、先ずはバインドを行います
+ * Appmartとの連動：
+ 
+アプリとAppmartを連動させるために、先ずはバインドを行います。
  
 `bindService(i, mConnection, Context.BIND_AUTO_CREATE);`
 
 
 
- * ServiceConnectionが正常に接続すれば、接続フラグをyesに変え、Serviceをバインドします
+ * アプリのバインド:
+ 
+ServiceConnectionが正常に接続すれば、接続フラグをyesに変え、Serviceをバインドします
 
 ```
 service = AppmartInBillingInterface.Stub.asInterface((IBinder) boundService);
@@ -185,7 +192,10 @@ isConnected = true;
 
 
 
- * 決済を行う際には必要なパラメータを暗号化し、【prepareForBillingService】メッソードに渡します。
+ * パラメータの暗号化:
+ 
+決済を行う際には必要なパラメータを暗号化し、【prepareForBillingService】メッソードに渡します。
+ 
  
 ```
 String dataEncrypted = createEncryptedData(
@@ -203,7 +213,7 @@ Bundle bundleForPaymentInterface = service.prepareForBillingService(APPMART_APP_
 
 
 
- * 【PendingIntent】の実行
+ * 【PendingIntent】の実行:
  
 ```
 pIntent = bundleForPaymentInterface.getParcelable(PENDING);
@@ -214,7 +224,7 @@ PendingIntentを送信すると、Appmartアプリが起動し、決済画面が
 
 
 
- * Broadcast情報を取得
+ * Broadcast情報を取得:
 
 ```
 transactionId = arg1.getExtras().getString(SERVICE_ID);
@@ -227,7 +237,9 @@ nextTransactionId = arg1.getExtras().getString(SERVICE_NEXT_ID);
 
 
 
- * 最後に決済を確認します
+ * 決済確定
+ 
+ この時点では決済が登録されましたが、まだ確定されていないので、最後に決済を確定します。
  
 ```
 //決済を確認します
