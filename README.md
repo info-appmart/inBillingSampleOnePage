@@ -239,7 +239,7 @@ nextTransactionId = arg1.getExtras().getString(SERVICE_NEXT_ID);
 
  * 決済確定
  
- この時点では決済が登録されましたが、まだ確定されていないので、最後に決済を確定します。
+この時点では決済が登録されましたが、まだ確定されていないので、最後に決済を確定します。
  
 ```
 //決済を確認します
@@ -247,3 +247,12 @@ int res = service.confirmFinishedTransaction(
 		transactionId, APPMART_SERVICE_ID,
 		APPMART_DEVELOPER_ID);
 ```
+
+---
+
+#### Appmart戻り値
+
+WORK IN PROGRESS
+
+
+実装できない方はお問い合わせください。
