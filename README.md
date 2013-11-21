@@ -46,7 +46,7 @@ public static final String APPMART_SERVICE_ID = "your_service_id";
 
 #### 本プロジェクトの大まかな流れ：
 
- *  AIDLファイルの生成
+ *  AIDLファイルの生成:
  
 Appmartの課金システムサービスとやりとりするために、AIDLファイルを作成する必要があります。
  
@@ -83,12 +83,15 @@ interface AppmartInBillingInterface {
 }
 ```
 
+> 必ず上記7つのメッソードを用意してください ！
 
- *  決済実行後のBroadcastを設定
+
+
+ *  決済実行後のBroadcastを設定:
  
- これからの修正はMainActivityクラス内に行います。
+これからの修正はMainActivityクラス内に行います。
  
- 決済画面からアプリに戻る際に、Broadcastが発信されるため、ReceiverBroadcastを用意します。
+決済画面からアプリに戻る際に、Broadcastが発信されるため、ReceiverBroadcastを用意します。
 
 ```
 setReceiver();
@@ -99,6 +102,7 @@ private void setReceiver() {
 	registerReceiver(receiver, filter);
 }
 ``` 
+
 
  * Appmartアプリに接続し、インストール状態を確認します
  
@@ -111,9 +115,10 @@ if (mContext.getPackageManager().queryIntentServices(i, 0).isEmpty()) {
 }
 ```
  
+ 
  * ServiceConnectionオブジェクトを用意
  
- RemoteServiceのため、ServiceConnectionインタフェースを実装しなければなりません。継承メッソードはonServiceConnected（接続時のcallback）とonServiceDisconnected（切断持のcallback）です。
+RemoteServiceのため、ServiceConnectionインタフェースを実装しなければなりません。継承メッソードはonServiceConnected（接続時のcallback）とonServiceDisconnected（切断持のcallback）です。
  
 ```
 ServiceConnection mConnection = new ServiceConnection() {
@@ -132,6 +137,7 @@ ServiceConnection mConnection = new ServiceConnection() {
 };
 ```
  
+
  * ボタンと連動するするhandlerを定義
 
 ボタンをクリックする際に、別threadでデータ処理を行うため、MainUIのHandlerを用意します。
@@ -146,7 +152,7 @@ handler = new Handler() {
 
  * ボタンの実装
  
- 実際にボタンを押下する時に、
+実際にボタンを押下する時に、
  
 ```
 
@@ -159,11 +165,13 @@ paymentButton.setOnClickListener(new OnClickListener() {
 
 ---
 
+
 #### Appmart課金システムとの具体的な連動
 
  * アプリとAppmartを連動させるために、先ずはバインドを行います
  
 `bindService(i, mConnection, Context.BIND_AUTO_CREATE);`
+
 
 
  * ServiceConnectionが正常に接続すれば、接続フラグをyesに変え、Serviceをバインドします
@@ -174,6 +182,7 @@ isConnected = true;
 ```
 
 > この時点ではAppmartの課金決済サービスと連動しており、AIDLインタフェースの各メッソードを呼ぶことができます。
+
 
 
  * 決済を行う際には必要なパラメータを暗号化し、【prepareForBillingService】メッソードに渡します。
@@ -193,6 +202,7 @@ Bundle bundleForPaymentInterface = service.prepareForBillingService(APPMART_APP_
 【prepareForBillingService】メッソードからreturnされるBundleを確認します。【resultCode】コードは1でしたら、　BundleのPendingIntentオブジェクトをインスタンス化し、実行します。
 
 
+
  * 【PendingIntent】の実行
  
 ```
@@ -201,6 +211,7 @@ pIntent.send(mContext, 0, new Intent());
 ```
 
 PendingIntentを送信すると、Appmartアプリが起動し、決済画面が表示されます。エンドユーザーにデータ入力して、決済を行います。決済が完了になりましたら、Broadcastを送信し、Appmartアプリが終了し、アプリに戻ります。
+
 
 
  * Broadcast情報を取得
@@ -213,6 +224,7 @@ nextTransactionId = arg1.getExtras().getString(SERVICE_NEXT_ID);
 
 //エンドユーザーにコンテンツを提供
 ```
+
 
 
  * 最後に決済を確認します
