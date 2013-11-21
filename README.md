@@ -250,9 +250,38 @@ int res = service.confirmFinishedTransaction(
 
 ---
 
-#### Appmart戻り値
-
-WORK IN PROGRESS
+####  リファレンス
 
 
-実装できない方はお問い合わせください。
+###### prepareForBillingService
+
+引数:
+
+| No  | 項目名                     | 属性        |  説明                                                                            |
+| --- |:-------------:| ------ | ------------------------------------ |
+| 1   | appId         | 8 － 30 | 登録済みのアプリID                       |
+| 2   | encryptedData | 指定なし  | サービスID, ディベロッパーID等を暗号化したデータ    |
+
+
+戻り値:
+
+| No  | 項目名                     | 説明                                                                                                  |
+| --- |:-------------:| --------------------------------------------- |
+| 1   | Bundle        | Bundle.getInt(“resultCode”) : 1=OK 90=エラー         |
+
+>  nullの場合、接続エラーが発生しています。Bundle.getInt(“resultCode”) == 90 の場合は【Msg】もリターンされます（1= アプリIDエラー, 90=暗号化データエラー）
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
