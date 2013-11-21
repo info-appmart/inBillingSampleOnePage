@@ -1,17 +1,27 @@
-Appmartアプリ内課金システム
+Appmart　アプリ内課金　 決済サンプル
 ======================
 
-Appmartアプリ内課金システムのサンプルコードです。
+Appmartアプリ内課金システムのサンプルコードです。このサンプールをfork・cloneしていただき、自由にご利用ください。 (apache 2.0ライセンス)
 
-簡単にAppmartのアプリ内決済システムをご利用いただけます。
-実装に関するご質問ございましたら、お問い合わせください。
+Pull requestも可能です。
 
-【管理】されているサービスでもご利用いただけます。
+このサンプルの対象サービスは:
 
-> 管理されているサービスに関しまして、【historyButton】を使うことにより、エンドユーザーは過去当サービスを購入したことあるかどうかをご確認いただけます。
+| 処理                         | 決済タイプ                | 管理           |
+| ------------- |:-------------:| ------: |
+| 決済実行処理         | 都度                        | 管理対象    |
+| 決済実行処理         | 継続                        | 管理対象    |
+| 決済実行処理         | 都度                        | 管理対象外|
+| 決済実行処理         | 継続                        | 管理対象外|
 
+
+> 管理されているサービスに関しまして、ソースコードをご確認ください。
+
+---
 
 #### 引数の設定
+
+下記引数を直してください。 (src/activities/MainActivity.java)
 
 ```
 //デベロッパＩＤ
@@ -34,12 +44,60 @@ public static final String APPMART_SERVICE_ID = "your_service_id";
 
 #### 本プロジェクトの大まかな流れ：
 
+ *  AIDLファイルの生成
+ 
+ Appmartの課金システムサービスとやりとりするために、AIDLファイルを作成する必要があります。
+ 
+ jp.app_mart.serviceパッケージを作り、AppmartInBillingInterface.aidlファイルを作ってください。
+ 
+ ```
+package jp.app_mart.service;
+
+import android.os.Bundle;
+
+interface AppmartInBillingInterface {
+
+    //課金前の method
+    Bundle prepareForBillingService(String appId, String encryptedData);
+
+    //サービスの詳細情報を取得
+    String getServiceDetails(String serviceId, String encryptedData);
+
+    //サービス提供後の method
+    int confirmFinishedTransaction(String trnsId, String serviceId, String developerId );
+
+    //トランザクション情報を取得
+    String getPaymentDetails(String trnsId, String serviceId, String developerId);
+
+    //次回支払情報を取得
+    String getNextPaymentDetails(String nextTrnsId, String developerId, String itemId);
+
+    //継続課金の停止
+    String stopContinuePayment(String nextTrnsId, String developerId, String itemId);
+    
+    //指定ユーザーの購入履歴（管理対象サービスのみ）
+    int hasAlreadyBought (String developerId, String appId, String itemId);
+
+}
+ ```
 
  *  決済実行後のBroadcastを設定
+ 
+ これからの修正はMainActivityクラス内に行います。
+ 
+ 決済画面からアプリに戻る際に、Broadcastが発信されるため、ReceiverBroadcastを用意します。
 
-`setReceiver();` 
+```
+setReceiver();
 
- * Appmartサービスに接続するためのIntentオブジェクトを用意
+private void setReceiver() {
+	IntentFilter filter = new IntentFilter(BROADCAST);
+	receiver = new AppmartReceiver();
+	registerReceiver(receiver, filter);
+}
+``` 
+
+ * Appmartアプリに接続し、インストール状態を確認します
  
 ```
 Intent i = new Intent();
@@ -51,6 +109,8 @@ if (mContext.getPackageManager().queryIntentServices(i, 0).isEmpty()) {
 ```
  
  * ServiceConnectionオブジェクトを用意
+ 
+ RemoteServiceのため、ServiceConnectionインタフェースを実装しなければなりません。継承メッソードはonServiceConnected（接続時のcallback）とonServiceDisconnected（切断持のcallback）です。
  
 ```
 ServiceConnection mConnection = new ServiceConnection() {
@@ -71,16 +131,10 @@ ServiceConnection mConnection = new ServiceConnection() {
  
  * ボタンと連動するするhandlerを定義
 
-```
-//決済用
-handler = new Handler() {
-   public void handleMessage(Message msg) {
-	。　。　。
-   }
-}
+ボタンをクリックする際に、別threadでデータ処理を行うため、MainUIのHandlerを用意します。
 
-//管理されているサービスの購入状況
-handlerCheck = new Handler() {
+```
+handler = new Handler() {
    public void handleMessage(Message msg) {
 	。　。　。
    }
@@ -89,17 +143,13 @@ handlerCheck = new Handler() {
 
  * ボタンの実装
  
+ 実際にボタンを押下する時に、
+ 
 ```
-//決済用ボタン
+
 Button paymentButton = (Button) findViewById(R.id.access_payment);
 paymentButton.setOnClickListener(new OnClickListener() {
-	。　。　。
-}
-
-//管理されているサービスの購入状況用
-Button historyButton = (Button) findViewById(R.id.access_payment);
-paymentButton.setOnClickListener(new OnClickListener() {
-	。　。　。
+	//説明は下にあります
 }
 ```
 
