@@ -17,6 +17,7 @@ Pull requestも可能です。
 
 > 管理されているサービスに関しまして、ソースコードをご確認ください。
 
+
 ---
 
 #### 引数の設定
@@ -41,16 +42,17 @@ public static final String APPMART_SERVICE_ID = "your_service_id";
 ```
 
 
+---
 
 #### 本プロジェクトの大まかな流れ：
 
  *  AIDLファイルの生成
  
- Appmartの課金システムサービスとやりとりするために、AIDLファイルを作成する必要があります。
+Appmartの課金システムサービスとやりとりするために、AIDLファイルを作成する必要があります。
  
- jp.app_mart.serviceパッケージを作り、AppmartInBillingInterface.aidlファイルを作ってください。
+jp.app_mart.serviceパッケージを作り、AppmartInBillingInterface.aidlファイルを作ってください。
  
- ```
+```
 package jp.app_mart.service;
 
 import android.os.Bundle;
@@ -79,7 +81,8 @@ interface AppmartInBillingInterface {
     int hasAlreadyBought (String developerId, String appId, String itemId);
 
 }
- ```
+```
+
 
  *  決済実行後のBroadcastを設定
  
@@ -154,6 +157,7 @@ paymentButton.setOnClickListener(new OnClickListener() {
 ```
 
 
+---
 
 #### Appmart課金システムとの具体的な連動
 
