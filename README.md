@@ -253,9 +253,9 @@ int res = service.confirmFinishedTransaction(
 ####  リファレンス
 
 
-###### prepareForBillingService
+###### 　prepareForBillingService
 
-引数:
+■■　引数:
 
 | No  | 項目名                     | 属性        |  説明                                                                            |
 | --- |:-------------:| ------ | ------------------------------------ |
@@ -263,13 +263,13 @@ int res = service.confirmFinishedTransaction(
 | 2   | encryptedData | 指定なし  | サービスID, ディベロッパーID等を暗号化したデータ    |
 
 
-戻り値:
+■■　戻り値:
 
 | No  | 項目名                     | 説明                                                                                                  |
 | --- |:-------------:| --------------------------------------------- |
 | 1   | Bundle        | Bundle.getInt(“resultCode”) : 1=OK 90=エラー         |
 
->  nullの場合、接続エラーが発生しています。Bundle.getInt(“resultCode”) == 90 の場合は【Msg】もリターンされます（1= アプリIDエラー, 90=暗号化データエラー）
+>  nullの場合、接続エラーが発生します。Bundle.getInt(“resultCode”) == 90 の場合は【Msg】もリターンされます（1= アプリIDエラー, 90=暗号化データエラー）
 
 
 
