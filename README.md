@@ -48,7 +48,7 @@ public static final String APPMART_SERVICE_ID = "your_service_id";
 ---
 
 
-#### 本プロジェクトの大まかな流れ：
+## 本プロジェクトの大まかな流れ：
 
  *  AIDLファイルの生成:
  
@@ -169,7 +169,7 @@ paymentButton.setOnClickListener(new OnClickListener() {
 ---
 
 
-#### Appmart課金システムとの具体的な連動
+## Appmart課金システムとの具体的な連動
 
  * Appmartとの連動：
  
@@ -250,12 +250,15 @@ int res = service.confirmFinishedTransaction(
 
 ---
 
-###  リファレンス
+##  リファレンス
 
 
-####  各メッソード
+###  各メッソードの引数・戻り値
 
-###### 　prepareForBillingService
+> メッソード一覧は【AIDLファイルの生成】を参照してください。
+
+
+#####　prepareForBillingService
 
 ■■　引数:
 
@@ -280,7 +283,7 @@ int res = service.confirmFinishedTransaction(
 
 
 
-###### 　getServiceDetails
+##### 　getServiceDetails
 
 ■■　引数:
 
@@ -322,7 +325,7 @@ int res = service.confirmFinishedTransaction(
 
 
 
-###### 　confirmFinishedTransaction
+##### 　confirmFinishedTransaction
 
 ■■　引数:
 
@@ -348,7 +351,7 @@ int res = service.confirmFinishedTransaction(
 
 
 
-###### 　getPaymentDetails
+#####　getPaymentDetails
 
 ■■　引数:
 
@@ -375,7 +378,7 @@ int res = service.confirmFinishedTransaction(
 
 
 
-###### 　getNextPaymentDetails
+#####　getNextPaymentDetails
 
 > 継続課金の場合のみ
 
@@ -404,7 +407,7 @@ int res = service.confirmFinishedTransaction(
 
 
 
-###### 　stopContinuePayment
+##### 　stopContinuePayment
 
 > 継続課金の場合のみ
 
@@ -429,7 +432,7 @@ int res = service.confirmFinishedTransaction(
 
 
 
-###### 　hasAlreadyBought
+##### 　hasAlreadyBought
 
 
 ■■　引数:
@@ -452,7 +455,10 @@ int res = service.confirmFinishedTransaction(
 | 3   | nextTransLogId | -          |  次回トランザクションID  |
 
 
-####  各メッソード
+
+### エラーメッセージ
+
+
 | No  | エラーコード     |説明  |
 | --- |---------- | ---|
 |1|1|App Idを選択してください。|
