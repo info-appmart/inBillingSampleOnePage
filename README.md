@@ -89,6 +89,13 @@ interface AppmartInBillingInterface {
 
 > 必ず上記7つのメッソードを用意してください 。メッソードの引数・戻り値は【リファレンス】を参照してください。
 
+ *  パーミッション追加:
+
+
+```
+<!-- 課金API用 -->
+<uses-permission android:name="jp.app_mart.permissions.APPMART_BILLING" />
+```
 
 
  *  決済実行後のBroadcastを設定:
