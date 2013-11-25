@@ -267,8 +267,9 @@ public class MainActivity extends Activity {
 				
 				//決済キー
 				String resultKeyCurrentStransaction= arg1.getExtras().getString(APPMART_RESULT_KEY);
-								
-				if (resultKeyCurrentStransaction!=null && resultKeyCurrentStransaction.equals(resultKey)){
+				
+				//Appmart1.2以下は決済キーが発行されない
+				if (resultKeyCurrentStransaction==null || resultKeyCurrentStransaction.equals(resultKey)){
 								
 					// 継続決済の場合は次回決済ＩＤを取得
 					nextTransactionId = arg1.getExtras().getString(SERVICE_NEXT_ID);
