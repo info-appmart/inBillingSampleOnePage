@@ -216,30 +216,40 @@ Bundle bundleForPaymentInterface = service.prepareForBillingService(APPMART_APP_
 > 【createEncryptedData】メッソードはクラスの一番下にありますので、ご参考ください。
 
 
-【prepareForBillingService】メッソードからreturnされるBundleを確認します。【resultCode】コードは1でしたら、　BundleのPendingIntentオブジェクトをインスタンス化し、実行します。
+【prepareForBillingService】メッソードからreturnされるBundleを確認します。
+
+【resultCode】コードは1でしたら、　決済キー【resultKey】を保存し、BundleのPendingIntentオブジェクトをインスタンス化し、実行します。
 
 
 
  * 【PendingIntent】の実行:
  
 ```
+resultKey= bundleForPaymentInterface.getString(RESULT_KEY);
 pIntent = bundleForPaymentInterface.getParcelable(PENDING);
 pIntent.send(mContext, 0, new Intent());
 ```
 
-PendingIntentを送信すると、Appmartアプリが起動し、決済画面が表示されます。エンドユーザーにデータ入力して、決済を行います。決済が完了になりましたら、Broadcastを送信し、Appmartアプリが終了し、アプリに戻ります。
+PendingIntentを送信すると、Appmartアプリが起動し、決済画面が表示されます。エンドユーザーにデータ入力して、決済を行います。
 
+決済が完了になりましたら、Broadcastが自動的に送信され、Appmartアプリが終了し、アプリに戻ります。
 
 
  * Broadcast情報を取得:
+ 
+配信された情報を取得します。決済IDが一致するかを確認します。
 
 ```
 transactionId = arg1.getExtras().getString(SERVICE_ID);
+String resultKeyCurrentStransaction= arg1.getExtras().getString(APPMART_RESULT_KEY);
 
 // 継続決済の場合は次回決済ＩＤを取得
 nextTransactionId = arg1.getExtras().getString(SERVICE_NEXT_ID);
 
-//エンドユーザーにコンテンツを提供
+
+if (resultKeyCurrentStransaction!=null && resultKeyCurrentStransaction.equals(resultKey)){
+  //エンドユーザーにコンテンツを提供
+}
 ```
 
 

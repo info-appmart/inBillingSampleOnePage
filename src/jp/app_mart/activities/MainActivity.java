@@ -36,15 +36,15 @@ import android.widget.Toast;
 public class MainActivity extends Activity {
 	
 	// デベロッパＩＤ
-	public static final String APPMART_DEVELOPER_ID = "your_developper_id";
+	public static final String APPMART_DEVELOPER_ID = "A0000022";
 	// ライセンスキー
-	public static final String APPMART_LICENSE_KEY = "your_licence_key";
+	public static final String APPMART_LICENSE_KEY = "e542436d-4abe-420a-8952-e50c73bc57a7";
 	// 公開鍵
-	public static final String APPMART_PUBLIC_KEY = "your_public_key";
+	public static final String APPMART_PUBLIC_KEY = "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCDLF3uz+PhNMJPgcNICreeH8MiNEHTC5TdkSxqG6ZQOgNVFk5vcLde0nnfRkqWy6T1wvj2MVpM5hzcE/RXh3oYA7z1zf4Jh1OdF09vm2DKDYwu51HFysiIZ48TyP8T5BpGesgq4kyiHioeWHp/8P8DT57h9l8s0RHDxt9kHHSgvQIDAQAB";
 	// アプリＩＤ
-	public static final String APPMART_APP_ID = "your_app_id";
+	public static final String APPMART_APP_ID = "7ce50053";
 	// サービスＩＤ
-	public static final String APPMART_SERVICE_ID = "your_service_id";
+	public static final String APPMART_SERVICE_ID = "test-canu-normal";
 	
 	// aidlファイルから生成されたサービスクラス
 	private AppmartInBillingInterface service;
@@ -65,16 +65,20 @@ public class MainActivity extends Activity {
 	PendingIntent pIntent;
 	// 決済ID
 	private String transactionId;
+	//決済キー
+	private String resultKey;
 	//次回決済ＩＤ
 	private String nextTransactionId;
 	// BroadcastReceiver(決済後）
 	private AppmartReceiver receiver;	
 	
-	public static final String RESULT_CODE 	 	= "resultCode";
-	public static final String PENDING			= "appmart_pending_intent";
-	public static final String BROADCAST		= "appmart_broadcast_return_service_payment";
-	public static final String SERVICE_ID		= "appmart_service_trns_id";
-	public static final String SERVICE_NEXT_ID	= "appmart_service_next_trns_id";
+	public static final String RESULT_CODE = "resultCode";
+	public static final String RESULT_KEY = "resultKey";
+	public static final String PENDING = "appmart_pending_intent";
+	public static final String BROADCAST = "appmart_broadcast_return_service_payment";
+	public static final String SERVICE_ID = "appmart_service_trns_id";
+	public static final String APPMART_RESULT_KEY = "appmart_result_key";	
+	public static final String SERVICE_NEXT_ID = "appmart_service_next_trns_id";
 	
 	TextView success;
 	
@@ -185,6 +189,9 @@ public class MainActivity extends Activity {
 										// PendingIntentを取得
 										pIntent = bundleForPaymentInterface.getParcelable(PENDING);
 										
+										// 決済キーを取得
+										resultKey= bundleForPaymentInterface.getString(RESULT_KEY);
+										
 										// mainUIに設定
 										handler.sendEmptyMessage(1);
 									}
@@ -258,35 +265,42 @@ public class MainActivity extends Activity {
 				// 決済ＩＤを取得
 				transactionId = arg1.getExtras().getString(SERVICE_ID);
 				
-				// 継続決済の場合は次回決済ＩＤを取得
-				nextTransactionId = arg1.getExtras().getString(SERVICE_NEXT_ID);
-
-				// コンテンツを提供し、ＤＢを更新
-				Thread.sleep(1000);
-
-				// 決済を確認
-				(new Thread(new Runnable() {
-					public void run() {
-
-						try {
-
-							int res = service.confirmFinishedTransaction(
-									transactionId, APPMART_SERVICE_ID,
-									APPMART_DEVELOPER_ID);
-
-							if (res == 1) {
-								handler.sendEmptyMessage(10);
-							} else {
-								handler.sendEmptyMessage(-10);
+				//決済キ
+				String resultKeyCurrentStransaction= arg1.getExtras().getString(APPMART_RESULT_KEY);
+								
+				if (resultKeyCurrentStransaction!=null && resultKeyCurrentStransaction.equals(resultKey)){
+								
+					// 継続決済の場合は次回決済ＩＤを取得
+					nextTransactionId = arg1.getExtras().getString(SERVICE_NEXT_ID);
+	
+					// コンテンツを提供し、ＤＢを更新
+					Thread.sleep(1000);
+	
+					// 決済を確認
+					(new Thread(new Runnable() {
+						public void run() {
+	
+							try {
+	
+								int res = service.confirmFinishedTransaction(
+										transactionId, APPMART_SERVICE_ID,
+										APPMART_DEVELOPER_ID);
+	
+								if (res == 1) {
+									handler.sendEmptyMessage(10);
+								} else {
+									handler.sendEmptyMessage(-10);
+								}
+	
+							} catch (Exception e) {
+								handler.sendEmptyMessage(3);
+								e.printStackTrace();
 							}
-
-						} catch (Exception e) {
-							handler.sendEmptyMessage(3);
-							e.printStackTrace();
+	
 						}
-
-					}
-				})).start();
+					})).start();
+				
+				}
 
 			} catch (Exception e) {
 				e.printStackTrace();
