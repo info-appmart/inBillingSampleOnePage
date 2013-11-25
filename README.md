@@ -265,7 +265,7 @@ int res = service.confirmFinishedTransaction(
 > メッソード一覧は【AIDLファイルの生成】を参照してください。
 
 
-#####　prepareForBillingService
+#####　【prepareForBillingService】メッソード
 
 ■■　引数:
 
@@ -290,7 +290,7 @@ int res = service.confirmFinishedTransaction(
 
 
 
-##### 　getServiceDetails
+##### 　【getServiceDetails】メッソード
 
 ■■　引数:
 
@@ -332,7 +332,7 @@ int res = service.confirmFinishedTransaction(
 
 
 
-##### 　confirmFinishedTransaction
+##### 　【confirmFinishedTransaction】メッソード
 
 ■■　引数:
 
@@ -358,7 +358,7 @@ int res = service.confirmFinishedTransaction(
 
 
 
-#####　getPaymentDetails
+#####　【getPaymentDetails】メッソード
 
 ■■　引数:
 
@@ -385,7 +385,7 @@ int res = service.confirmFinishedTransaction(
 
 
 
-#####　getNextPaymentDetails
+#####　【getNextPaymentDetails】メッソード
 
 > 継続課金の場合のみ
 
@@ -414,7 +414,7 @@ int res = service.confirmFinishedTransaction(
 
 
 
-##### 　stopContinuePayment
+##### 　【stopContinuePayment】メッソード
 
 > 継続課金の場合のみ
 
@@ -439,7 +439,7 @@ int res = service.confirmFinishedTransaction(
 
 
 
-##### 　hasAlreadyBought
+##### 　【hasAlreadyBought】メッソード
 
 
 ■■　引数:
