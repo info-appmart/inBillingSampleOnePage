@@ -31,25 +31,20 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 /**
- * appMart(c) の内部課金システムサンプルコードです。 
- * 一つのクラスで　service, receiver, activityなどをまとめました。
+ * @copyright Appmart(c) の内部課金システムサンプルコードです。 
  */
 public class MainActivity extends Activity {
-
-	/* 対象アプリのサービス情報 */
 	
 	// デベロッパＩＤ
-	public static final String APPMART_DEVELOPER_ID = "developer_id";
+	public static final String APPMART_DEVELOPER_ID = "your_developper_id";
 	// ライセンスキー
 	public static final String APPMART_LICENSE_KEY = "your_licence_key";
 	// 公開鍵
 	public static final String APPMART_PUBLIC_KEY = "your_public_key";
 	// アプリＩＤ
-	public static final String APPMART_APP_ID = "application_id";
+	public static final String APPMART_APP_ID = "your_app_id";
 	// サービスＩＤ
-	public static final String APPMART_SERVICE_ID = "service_id";
-
-	/* appmart課金サービス関連*/
+	public static final String APPMART_SERVICE_ID = "your_service_id";
 	
 	// aidlファイルから生成されたサービスクラス
 	private AppmartInBillingInterface service;
@@ -60,8 +55,6 @@ public class MainActivity extends Activity {
 	// サービスパス
 	public static final String APP_PATH = "jp.app_mart.service.AppmartInBillingService";
 	
-	/* その他　*/
-
 	// ＤＥＢＵＧ
 	private boolean isDebug = true;	
 	// アプリコンテキスト
@@ -75,7 +68,7 @@ public class MainActivity extends Activity {
 	//次回決済ＩＤ
 	private String nextTransactionId;
 	// BroadcastReceiver(決済後）
-	private CheckersReceiver receiver;	
+	private AppmartReceiver receiver;	
 	
 	public static final String RESULT_CODE 	 	= "resultCode";
 	public static final String PENDING			= "appmart_pending_intent";
@@ -83,11 +76,8 @@ public class MainActivity extends Activity {
 	public static final String SERVICE_ID		= "appmart_service_trns_id";
 	public static final String SERVICE_NEXT_ID	= "appmart_service_next_trns_id";
 	
+	TextView success;
 	
-	/*
-	 * (non-Javadoc)
-	 * @see android.app.Activity#onCreate(android.os.Bundle)
-	 */
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 
@@ -95,6 +85,8 @@ public class MainActivity extends Activity {
 		setContentView(R.layout.activity_main);
 		mContext = getApplicationContext();
 
+		success = (TextView) findViewById(R.id.success_tv);
+		
 		// 決済後のbroadcastをキャッチ
 		setReceiver();
 
@@ -135,7 +127,6 @@ public class MainActivity extends Activity {
 			@SuppressLint("HandlerLeak")
 			@Override
 			public void handleMessage(Message msg) {
-
 				switch (msg.what) {
 				case 1: // pendingIntent取得
 					accessPaymentPage();
@@ -154,10 +145,9 @@ public class MainActivity extends Activity {
 					debugMess(getString(R.string.settlement_not_confirmed));
 					break;
 				}
-
 			}
-
 		};
+		
 
 		// 決済画面を呼ぶボタン
 		Button paymentButton = (Button) findViewById(R.id.access_payment);
@@ -211,13 +201,14 @@ public class MainActivity extends Activity {
 				}
 			}
 		});
+		
 	}
-
+	
 	/*　BroadcastReceiverの設定 */
 	private void setReceiver() {
 		// Broadcast設定
 		IntentFilter filter = new IntentFilter(BROADCAST);
-		receiver = new CheckersReceiver();
+		receiver = new AppmartReceiver();
 		registerReceiver(receiver, filter);
 	}
 
@@ -238,7 +229,6 @@ public class MainActivity extends Activity {
 
 	/* 課金画面へリダイレクト */
 	private void accessPaymentPage() {
-
 		try {
 			pIntent.send(mContext, 0, new Intent());
 		} catch (CanceledException e) {
@@ -256,7 +246,7 @@ public class MainActivity extends Activity {
 	}
 
 	/*決済完了後のbroadcastをcatchするReceiverクラス */
-	private class CheckersReceiver extends BroadcastReceiver {
+	private class AppmartReceiver extends BroadcastReceiver {
 
 		@Override
 		public void onReceive(Context arg0, Intent arg1) {

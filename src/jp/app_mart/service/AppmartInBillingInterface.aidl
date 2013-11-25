@@ -21,5 +21,7 @@ interface AppmartInBillingInterface {
 
     //継続課金の停止
     String stopContinuePayment(String nextTrnsId, String developerId, String itemId);
+    
+     int hasAlreadyBought (String developerId, String appId, String itemId);
 
 }
