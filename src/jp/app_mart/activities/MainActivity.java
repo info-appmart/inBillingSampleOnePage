@@ -36,15 +36,15 @@ import android.widget.Toast;
 public class MainActivity extends Activity {
 	
 	// デベロッパＩＤ
-	public static final String APPMART_DEVELOPER_ID = "A0000022";
+	public static final String APPMART_DEVELOPER_ID = "your_developer_id";
 	// ライセンスキー
-	public static final String APPMART_LICENSE_KEY = "e542436d-4abe-420a-8952-e50c73bc57a7";
+	public static final String APPMART_LICENSE_KEY = "your_license_key";
 	// 公開鍵
-	public static final String APPMART_PUBLIC_KEY = "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCDLF3uz+PhNMJPgcNICreeH8MiNEHTC5TdkSxqG6ZQOgNVFk5vcLde0nnfRkqWy6T1wvj2MVpM5hzcE/RXh3oYA7z1zf4Jh1OdF09vm2DKDYwu51HFysiIZ48TyP8T5BpGesgq4kyiHioeWHp/8P8DT57h9l8s0RHDxt9kHHSgvQIDAQAB";
+	public static final String APPMART_PUBLIC_KEY = "your_public_key";
 	// アプリＩＤ
-	public static final String APPMART_APP_ID = "7ce50053";
+	public static final String APPMART_APP_ID = "your_application_id";
 	// サービスＩＤ
-	public static final String APPMART_SERVICE_ID = "test-canu-normal";
+	public static final String APPMART_SERVICE_ID = "your_service_id";
 	
 	// aidlファイルから生成されたサービスクラス
 	private AppmartInBillingInterface service;
