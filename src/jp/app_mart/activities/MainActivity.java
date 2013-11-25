@@ -265,7 +265,7 @@ public class MainActivity extends Activity {
 				// ŒˆÏ‚h‚c‚ğæ“¾
 				transactionId = arg1.getExtras().getString(SERVICE_ID);
 				
-				//ŒˆÏƒL
+				//ŒˆÏƒL[
 				String resultKeyCurrentStransaction= arg1.getExtras().getString(APPMART_RESULT_KEY);
 								
 				if (resultKeyCurrentStransaction!=null && resultKeyCurrentStransaction.equals(resultKey)){
