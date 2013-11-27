@@ -87,7 +87,7 @@ interface AppmartInBillingInterface {
 }
 ```
 
-> 必ず上記7つのメッソードを用意してください 。メッソードの引数・戻り値は【リファレンス】を参照してください。
+> 必ず上記7つのメソッドを用意してください 。メソッドの引数・戻り値は【リファレンス】を参照してください。
 
  *  パーミッション追加:
 
@@ -129,7 +129,7 @@ if (mContext.getPackageManager().queryIntentServices(i, 0).isEmpty()) {
  
  * ServiceConnectionオブジェクトを用意:
  
-RemoteServiceのため、ServiceConnectionインタフェースを実装しなければなりません。継承メッソードはonServiceConnected（接続時のcallback）とonServiceDisconnected（切断持のcallback）です。
+RemoteServiceのため、ServiceConnectionインタフェースを実装しなければなりません。継承メソッドはonServiceConnected（接続時のcallback）とonServiceDisconnected（切断持のcallback）です。
  
 ```
 ServiceConnection mConnection = new ServiceConnection() {
@@ -195,13 +195,13 @@ service = AppmartInBillingInterface.Stub.asInterface((IBinder) boundService);
 isConnected = true;
 ```
 
-> この時点ではAppmartの課金決済サービスと連動しており、AIDLインタフェースの各メッソードを呼ぶことができます。
+> この時点ではAppmartの課金決済サービスと連動しており、AIDLインタフェースの各メソッドを呼ぶことができます。
 
 
 
  * パラメータの暗号化:
  
-決済を行う際には必要なパラメータを暗号化し、【prepareForBillingService】メッソードに渡します。
+決済を行う際には必要なパラメータを暗号化し、【prepareForBillingService】メソッドに渡します。
  
  
 ```
@@ -213,10 +213,10 @@ String dataEncrypted = createEncryptedData(
 Bundle bundleForPaymentInterface = service.prepareForBillingService(APPMART_APP_ID, dataEncrypted);
 ```
 
-> 【createEncryptedData】メッソードはクラスの一番下にありますので、ご参考ください。
+> 【createEncryptedData】メソッドはクラスの一番下にありますので、ご参考ください。
 
 
-【prepareForBillingService】メッソードからreturnされるBundleを確認します。
+【prepareForBillingService】メソッドからreturnされるBundleを確認します。
 
 【resultCode】コードは1でしたら、　決済キー【resultKey】を保存し、BundleのPendingIntentオブジェクトをインスタンス化し、実行します。
 
@@ -270,12 +270,12 @@ int res = service.confirmFinishedTransaction(
 ##  リファレンス
 
 
-###  各メッソードの引数・戻り値
+###  各メソッドの引数・戻り値
 
-> メッソード一覧は【AIDLファイルの生成】を参照してください。
+> メソッド一覧は【AIDLファイルの生成】を参照してください。
 
 
-#####　【prepareForBillingService】メッソード
+#####　【prepareForBillingService】メソッド
 
 ■■　引数:
 
@@ -284,7 +284,7 @@ int res = service.confirmFinishedTransaction(
 | 1   | appId         | 8 － 30 | 登録済みのアプリID                       |
 | 2   | encryptedData | 指定なし  | サービスID, ディベロッパーID等を暗号化したデータ    |
 
-> 暗号化パラメータの詳細はcreateEncryptedDataメッソードをご確認ください。
+> 暗号化パラメータの詳細はcreateEncryptedDataメソッドをご確認ください。
 
 ■■　戻り値:
 
@@ -300,7 +300,7 @@ int res = service.confirmFinishedTransaction(
 
 
 
-##### 　【getServiceDetails】メッソード
+##### 　【getServiceDetails】メソッド
 
 ■■　引数:
 
@@ -309,7 +309,7 @@ int res = service.confirmFinishedTransaction(
 | 1   | appId         | 8 － 30 | 登録済みのアプリID                       |
 | 2   | encryptedData | 指定なし  | サービスID, ディベロッパーID等を暗号化したデータ    |
 
-> 暗号化パラメータの詳細はcreateEncryptedDataメッソードをご確認ください。
+> 暗号化パラメータの詳細はcreateEncryptedDataメソッドをご確認ください。
 
 
 ■■　戻り値:
@@ -342,7 +342,7 @@ int res = service.confirmFinishedTransaction(
 
 
 
-##### 　【confirmFinishedTransaction】メッソード
+##### 　【confirmFinishedTransaction】メソッド
 
 ■■　引数:
 
@@ -352,7 +352,7 @@ int res = service.confirmFinishedTransaction(
 | 2   | itemId | 1 - 30  | 登録済みのサービスID    |
 | 3   | developerId | 8 | ディベロッパーID    |
 
-> 暗号化パラメータの詳細はcreateEncryptedDataメッソードをご確認ください。
+> 暗号化パラメータの詳細はcreateEncryptedDataメソッドをご確認ください。
 
 ■■　戻り値:
 
@@ -368,7 +368,7 @@ int res = service.confirmFinishedTransaction(
 
 
 
-#####　【getPaymentDetails】メッソード
+#####　【getPaymentDetails】メソッド
 
 ■■　引数:
 
@@ -378,7 +378,7 @@ int res = service.confirmFinishedTransaction(
 | 2   | itemId | 1 - 30  | 登録済みのサービスID    |
 | 3   | developerId | 8 | ディベロッパーID    |
 
-> 暗号化パラメータの詳細はcreateEncryptedDataメッソードをご確認ください。
+> 暗号化パラメータの詳細はcreateEncryptedDataメソッドをご確認ください。
 
 ■■　戻り値:
 
@@ -395,7 +395,7 @@ int res = service.confirmFinishedTransaction(
 
 
 
-#####　【getNextPaymentDetails】メッソード
+#####　【getNextPaymentDetails】メソッド
 
 > 継続課金の場合のみ
 
@@ -407,7 +407,7 @@ int res = service.confirmFinishedTransaction(
 | 2   | developerId | 8 | ディベロッパーID    |
 | 3   | itemId | 1 - 30  | 登録済みのサービスID    |
 
-> 暗号化パラメータの詳細はcreateEncryptedDataメッソードをご確認ください。
+> 暗号化パラメータの詳細はcreateEncryptedDataメソッドをご確認ください。
 
 ■■　戻り値:
 
@@ -424,7 +424,7 @@ int res = service.confirmFinishedTransaction(
 
 
 
-##### 　【stopContinuePayment】メッソード
+##### 　【stopContinuePayment】メソッド
 
 > 継続課金の場合のみ
 
@@ -436,7 +436,7 @@ int res = service.confirmFinishedTransaction(
 | 2   | developerId | 8 | ディベロッパーID    |
 | 3   | itemId | 1 - 30  | 登録済みのサービスID    |
 
-> 暗号化パラメータの詳細はcreateEncryptedDataメッソードをご確認ください。
+> 暗号化パラメータの詳細はcreateEncryptedDataメソッドをご確認ください。
 
 ■■　戻り値:
 
@@ -449,7 +449,7 @@ int res = service.confirmFinishedTransaction(
 
 
 
-##### 　【hasAlreadyBought】メッソード
+##### 　【hasAlreadyBought】メソッド
 
 
 ■■　引数:
@@ -461,7 +461,7 @@ int res = service.confirmFinishedTransaction(
 | 3   | itemId | 1 - 30  | 登録済みのサービスID    |
 
 
-> 暗号化パラメータの詳細はcreateEncryptedDataメッソードをご確認ください。
+> 暗号化パラメータの詳細はcreateEncryptedDataメソッドをご確認ください。
 
 ■■　戻り値:
 
@@ -474,7 +474,7 @@ int res = service.confirmFinishedTransaction(
 
 * 注意点
 
-ユーザーはログインしていない状態で【hasAlreadyBought】メッソードを呼び出す場合は【null】がリターンされます。
+ユーザーはログインしていない状態で【hasAlreadyBought】メソッドを呼び出す場合は【null】がリターンされます。
 ログインさせるために、下記コードをご利用下さい：
 
 
@@ -486,7 +486,7 @@ return null;
 
 ////
 
-/* ログイン後　呼び出されるメッソード */
+/* ログイン後　呼び出されるメソッド */
 protected void onActivityResult(int requestCode, int resultCode, Intent data) {
   if (requestCode == "1111" ) {
     if(resultCode == RESULT_OK){      
