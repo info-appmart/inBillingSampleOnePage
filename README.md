@@ -468,9 +468,34 @@ int res = service.confirmFinishedTransaction(
 | No  | 項目名               | サブ項目名        | 説明                                                                               |
 | --- |:----------: | ---------- |--------------------------------------|
 | 1   | Result_code | -          |  1== OK  90=例外発生  |
-| 2   | transactionId | -          |  トランザクションID  |
-| 3   | nextTransLogId | -          |  次回トランザクションID  |
+| 2   | buyFlg | -          |  購入フラッグ 1== 購入済み　0==未購入  |
+| 3   | msg | -          |  エラーメッセージのID  |
 
+
+* 注意点 *
+
+ユーザーはログインしていない状態で【hasAlreadyBought】メッソードを呼び出す場合は【null】がリターンされます。
+ログインさせるために、下記コードをご利用下さい：
+
+
+```
+
+Intent intent = new Intent("jp.app_mart.app.LOGIN_ACTIVITY");
+startActivityForResult(intent, "1111");
+return null;
+
+////
+
+/* ログイン後　呼び出されるメッソード */
+protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+  if (requestCode == REQUEST_CODE ) {
+    if(resultCode == RESULT_OK){      
+	  Utils.debug(mContext, "ログインしました！");		    	 
+	}		    
+  }
+}
+
+```
 
 
 ### エラーメッセージ
