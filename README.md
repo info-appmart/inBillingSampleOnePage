@@ -472,7 +472,7 @@ int res = service.confirmFinishedTransaction(
 | 3   | msg | -          |  エラーメッセージのID  |
 
 
-* 注意点 *
+* 注意点
 
 ユーザーはログインしていない状態で【hasAlreadyBought】メッソードを呼び出す場合は【null】がリターンされます。
 ログインさせるために、下記コードをご利用下さい：
