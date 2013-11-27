@@ -488,7 +488,7 @@ return null;
 
 /* ログイン後　呼び出されるメッソード */
 protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-  if (requestCode == REQUEST_CODE ) {
+  if (requestCode == "1111" ) {
     if(resultCode == RESULT_OK){      
 	  Utils.debug(mContext, "ログインしました！");		    	 
 	}		    
