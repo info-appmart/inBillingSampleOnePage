@@ -31,47 +31,46 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 /**
- * @copyright Appmart(c) ‚Ì“à•”‰Û‹àƒVƒXƒeƒ€ƒTƒ“ƒvƒ‹ƒR[ƒh‚Å‚·B 
+ * @copyright Appmart(c) ã®å†…éƒ¨èª²é‡‘ã‚·ã‚¹ãƒ†ãƒ ã‚µãƒ³ãƒ—ãƒ«ã‚³ãƒ¼ãƒ‰ã§ã™ã€‚ 
  */
 public class MainActivity extends Activity {
 	
-	// ƒfƒxƒƒbƒp‚h‚c
+	// ãƒ‡ãƒ™ãƒ­ãƒƒãƒ‘ï¼©ï¼¤
 	public static final String APPMART_DEVELOPER_ID = "your_developer_id";
-	// ƒ‰ƒCƒZƒ“ƒXƒL[
+	// ãƒ©ã‚¤ã‚»ãƒ³ã‚¹ã‚­ãƒ¼
 	public static final String APPMART_LICENSE_KEY = "your_license_key";
-	// ŒöŠJŒ®
+	// å…¬é–‹éµ
 	public static final String APPMART_PUBLIC_KEY = "your_public_key";
-	// ƒAƒvƒŠ‚h‚c
+	// ã‚¢ãƒ—ãƒªï¼©ï¼¤
 	public static final String APPMART_APP_ID = "your_application_id";
-	// ƒT[ƒrƒX‚h‚c
-	public static final String APPMART_SERVICE_ID = "your_service_id";
-	
-	// aidlƒtƒ@ƒCƒ‹‚©‚ç¶¬‚³‚ê‚½ƒT[ƒrƒXƒNƒ‰ƒX
+	// ã‚µãƒ¼ãƒ“ã‚¹ï¼©ï¼¤
+	public static final String APPMART_SERVICE_ID = "your_service_id";	
+	// aidlãƒ•ã‚¡ã‚¤ãƒ«ã‹ã‚‰ç”Ÿæˆã•ã‚ŒãŸã‚µãƒ¼ãƒ“ã‚¹ã‚¯ãƒ©ã‚¹
 	private AppmartInBillingInterface service;
-	// Ú‘±ó‘Ô
+	// æ¥ç¶šçŠ¶æ…‹
 	private boolean isConnected = false;
 	// appmart package
 	public static final String APP_PACKAGE = "jp.app_mart";
-	// ƒT[ƒrƒXƒpƒX
+	// ã‚µãƒ¼ãƒ“ã‚¹ãƒ‘ã‚¹
 	public static final String APP_PATH = "jp.app_mart.service.AppmartInBillingService";
 	
-	// ‚c‚d‚a‚t‚f
+	//DEBUG
 	private boolean isDebug = true;	
-	// ƒAƒvƒŠƒRƒ“ƒeƒLƒXƒg
+	// ã‚¢ãƒ—ãƒªã‚³ãƒ³ãƒ†ã‚­ã‚¹ãƒˆ
 	private Context mContext;
-	// thread—p‚Ìhandler
+	// threadç”¨ã®handler
 	private Handler handler = new Handler();
 	// pendingIntent
 	PendingIntent pIntent;
-	// ŒˆÏID
+	// æ±ºæ¸ˆID
 	private String transactionId;
-	//ŒˆÏƒL[
+	//æ±ºæ¸ˆã‚­ãƒ¼
 	private String resultKey;
-	//Ÿ‰ñŒˆÏ‚h‚c
+	//æ¬¡å›æ±ºæ¸ˆï¼©ï¼¤
 	private String nextTransactionId;
-	// BroadcastReceiver(ŒˆÏŒãj
+	// BroadcastReceiver(æ±ºæ¸ˆå¾Œï¼‰
 	private AppmartReceiver receiver;	
-	//ƒT[ƒrƒX‚ğƒoƒCƒ“ƒh‚·‚é‚½‚ß‚ÌserviceConnectionƒCƒ“ƒXƒ^ƒ“ƒX
+	//ã‚µãƒ¼ãƒ“ã‚¹ã‚’ãƒã‚¤ãƒ³ãƒ‰ã™ã‚‹ãŸã‚ã®serviceConnectionã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹
 	private ServiceConnection mConnection;
 	
 	public static final String RESULT_CODE = "resultCode";
@@ -93,10 +92,10 @@ public class MainActivity extends Activity {
 
 		success = (TextView) findViewById(R.id.success_tv);
 		
-		// ŒˆÏŒã‚Ìbroadcast‚ğƒLƒƒƒbƒ`
+		// æ±ºæ¸ˆå¾Œã®broadcastã‚’ã‚­ãƒ£ãƒƒãƒ
 		setReceiver();
 
-		// appmartƒT[ƒrƒX‚ÉÚ‘±‚·‚é‚½‚ß‚ÌIntentƒIƒuƒWƒFƒNƒg‚ğ¶¬
+		// appmartã‚µãƒ¼ãƒ“ã‚¹ã«æ¥ç¶šã™ã‚‹ãŸã‚ã®Intentã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’ç”Ÿæˆ
 		Intent i = new Intent();
 		i.setClassName(APP_PACKAGE, APP_PATH);
 		if (mContext.getPackageManager().queryIntentServices(i, 0).isEmpty()) {
@@ -104,24 +103,24 @@ public class MainActivity extends Activity {
 			return;
 		}
 
-		// Service ConnectionƒCƒ“ƒXƒ^ƒ“ƒX‰»
+		// Service Connectionã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹åŒ–
 		mConnection = new ServiceConnection() {
 			
-			//Ú‘±Às
+			//æ¥ç¶šæ™‚å®Ÿè¡Œ
 			public void onServiceConnected(ComponentName name,
 					IBinder boundService) {
-				//‚r‚…‚’‚–‚‰‚ƒ‚…ƒNƒ‰ƒX‚ğƒCƒ“ƒXƒ^ƒ“ƒX‰»
+				//ï¼³ï½…ï½’ï½–ï½‰ï½ƒï½…ã‚¯ãƒ©ã‚¹ã‚’ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹åŒ–
 				service = AppmartInBillingInterface.Stub.asInterface((IBinder) boundService);
 				isConnected = true;
 				debugMess(getString(R.string.appmart_connection_success));
 			}
-			//Ø’fÀs
+			//åˆ‡æ–­æ™‚å®Ÿè¡Œ
 			public void onServiceDisconnected(ComponentName name) {
 				service = null;
 			}
 		};
 
-		// bindService‚ğ—˜—p‚µAƒT[ƒrƒX‚ÉÚ‘±
+		// bindServiceã‚’åˆ©ç”¨ã—ã€ã‚µãƒ¼ãƒ“ã‚¹ã«æ¥ç¶š
 		try {
 			bindService(i, mConnection, Context.BIND_AUTO_CREATE);
 		} catch (Exception e) {
@@ -129,26 +128,26 @@ public class MainActivity extends Activity {
 			debugMess(getString(R.string.appmart_connection_not_possible));
 		}
 
-		// Handler‰Šú‰»
+		// HandleråˆæœŸåŒ–
 		handler = new Handler() {
 			@SuppressLint("HandlerLeak")
 			@Override
 			public void handleMessage(Message msg) {
 				switch (msg.what) {
-				case 1: // pendingIntentæ“¾
+				case 1: // pendingIntentå–å¾—
 					accessPaymentPage();
 					break;
-				case 2:// ƒpƒ‰ƒ[ƒ^NG
+				case 2:// ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿NG
 					debugMess(getString(R.string.wrong_parameters));
 					break;
-				case 3:// —áŠO”­¶
+				case 3:// ä¾‹å¤–ç™ºç”Ÿ
 					debugMess(getString(R.string.exception_occured));
 					break;
-				case 10:// ŒˆÏÅIŠm”FŠ®—¹					
+				case 10:// æ±ºæ¸ˆæœ€çµ‚ç¢ºèªå®Œäº†					
 					TextView success = (TextView) findViewById(R.id.success_tv);
 					success.setVisibility(View.VISIBLE);					
 					break;
-				case -10:// ŒˆÏÅIŠm”FƒGƒ‰[
+				case -10:// æ±ºæ¸ˆæœ€çµ‚ç¢ºèªã‚¨ãƒ©ãƒ¼
 					debugMess(getString(R.string.settlement_not_confirmed));
 					break;
 				}
@@ -156,13 +155,13 @@ public class MainActivity extends Activity {
 		};
 		
 
-		// ŒˆÏ‰æ–Ê‚ğŒÄ‚Ôƒ{ƒ^ƒ“
+		// æ±ºæ¸ˆç”»é¢ã‚’å‘¼ã¶ãƒœã‚¿ãƒ³
 		Button paymentButton = (Button) findViewById(R.id.access_payment);
 		paymentButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 
-				//Ú‘±ó‘Ô‚ÌŠm”F
+				//æ¥ç¶šçŠ¶æ…‹ã®ç¢ºèª
 				if (isConnected) {
 
 					debugMess(getString(R.string.start_information_handle));
@@ -171,13 +170,13 @@ public class MainActivity extends Activity {
 						public void run() {
 							try {
 
-								// •K—v‚Èƒf[ƒ^‚ğˆÃ†‰»
+								// å¿…è¦ãªãƒ‡ãƒ¼ã‚¿ã‚’æš—å·åŒ–
 								String dataEncrypted = createEncryptedData(
 										APPMART_SERVICE_ID,
 										APPMART_DEVELOPER_ID,
 										APPMART_LICENSE_KEY, APPMART_PUBLIC_KEY);
 
-								// ƒT[ƒrƒX‚ÌprepareForBillingServiceƒƒ\ƒbƒh‚ğŒÄ‚Ñ‚Ü‚·
+								// ã‚µãƒ¼ãƒ“ã‚¹ã®prepareForBillingServiceãƒ¡ã‚½ãƒƒãƒ‰ã‚’å‘¼ã³ã¾ã™
 								Bundle bundleForPaymentInterface = service.prepareForBillingService(
 												APPMART_APP_ID, dataEncrypted);
 
@@ -189,13 +188,13 @@ public class MainActivity extends Activity {
 										return;
 									} else {
 
-										// PendingIntent‚ğæ“¾
+										// PendingIntentã‚’å–å¾—
 										pIntent = bundleForPaymentInterface.getParcelable(PENDING);
 										
-										// ŒˆÏƒL[‚ğæ“¾
+										// æ±ºæ¸ˆã‚­ãƒ¼ã‚’å–å¾—
 										resultKey= bundleForPaymentInterface.getString(RESULT_KEY);
 										
-										// mainUI‚Éİ’è
+										// mainUIã«è¨­å®š
 										handler.sendEmptyMessage(1);
 									}
 
@@ -214,9 +213,9 @@ public class MainActivity extends Activity {
 		
 	}
 	
-	/*@BroadcastReceiver‚Ìİ’è */
+	/*ã€€BroadcastReceiverã®è¨­å®š */
 	private void setReceiver() {
-		// Broadcastİ’è
+		// Broadcastè¨­å®š
 		IntentFilter filter = new IntentFilter(BROADCAST);
 		receiver = new AppmartReceiver();
 		registerReceiver(receiver, filter);
@@ -228,16 +227,16 @@ public class MainActivity extends Activity {
 
 		super.onDestroy();
 
-		// appmartƒT[ƒrƒX‚©‚çƒAƒ“ƒoƒCƒ“ƒh
+		// appmartã‚µãƒ¼ãƒ“ã‚¹ã‹ã‚‰ã‚¢ãƒ³ãƒã‚¤ãƒ³ãƒ‰
 		unbindService(mConnection);
 		service = null;
 
-		// broadcast’â~
+		// broadcaståœæ­¢
 		unregisterReceiver(receiver);
 
 	}
 
-	/* ‰Û‹à‰æ–Ê‚ÖƒŠƒ_ƒCƒŒƒNƒg */
+	/* èª²é‡‘ç”»é¢ã¸ãƒªãƒ€ã‚¤ãƒ¬ã‚¯ãƒˆ */
 	private void accessPaymentPage() {
 		try {
 			pIntent.send(mContext, 0, new Intent());
@@ -246,7 +245,7 @@ public class MainActivity extends Activity {
 		}
 	}
 
-	/* debug—p */
+	/* debugç”¨ */
 	private void debugMess(String mess) {
 		if (isDebug) {
 			Log.d("DEBUG", mess);
@@ -255,7 +254,7 @@ public class MainActivity extends Activity {
 		}
 	}
 
-	/*ŒˆÏŠ®—¹Œã‚Ìbroadcast‚ğcatch‚·‚éReceiverƒNƒ‰ƒX */
+	/*æ±ºæ¸ˆå®Œäº†å¾Œã®broadcastã‚’catchã™ã‚‹Receiverã‚¯ãƒ©ã‚¹ */
 	private class AppmartReceiver extends BroadcastReceiver {
 
 		@Override
@@ -265,22 +264,22 @@ public class MainActivity extends Activity {
 
 				debugMess(getString(R.string.settlement_confirmed));
 
-				// ŒˆÏ‚h‚c‚ğæ“¾
+				// æ±ºæ¸ˆï¼©ï¼¤ã‚’å–å¾—
 				transactionId = arg1.getExtras().getString(SERVICE_ID);
 				
-				//ŒˆÏƒL[
+				//æ±ºæ¸ˆã‚­ãƒ¼
 				String resultKeyCurrentStransaction= arg1.getExtras().getString(APPMART_RESULT_KEY);
 				
-				//Appmart1.2ˆÈ‰º‚ÍŒˆÏƒL[‚ª”­s‚³‚ê‚È‚¢
+				//Appmart1.2ä»¥ä¸‹ã¯æ±ºæ¸ˆã‚­ãƒ¼ãŒç™ºè¡Œã•ã‚Œãªã„
 				if (resultKeyCurrentStransaction==null || resultKeyCurrentStransaction.equals(resultKey)){
 								
-					// Œp‘±ŒˆÏ‚Ìê‡‚ÍŸ‰ñŒˆÏ‚h‚c‚ğæ“¾
+					// ç¶™ç¶šæ±ºæ¸ˆã®å ´åˆã¯æ¬¡å›æ±ºæ¸ˆï¼©ï¼¤ã‚’å–å¾—
 					nextTransactionId = arg1.getExtras().getString(SERVICE_NEXT_ID);
 	
-					// ƒRƒ“ƒeƒ“ƒc‚ğ’ñ‹Ÿ‚µA‚c‚a‚ğXV
+					// ã‚³ãƒ³ãƒ†ãƒ³ãƒ„ã‚’æä¾›ã—ã€ï¼¤ï¼¢ã‚’æ›´æ–°
 					Thread.sleep(1000);
 	
-					// ŒˆÏ‚ğŠm”F
+					// æ±ºæ¸ˆã‚’ç¢ºèª
 					(new Thread(new Runnable() {
 						public void run() {
 	
@@ -312,7 +311,7 @@ public class MainActivity extends Activity {
 		}
 	}
 
-	/* ˆø”ˆÃ†‰» */
+	/* å¼•æ•°æš—å·åŒ– */
 	public String createEncryptedData(String serviceId, String developId,
 			String strLicenseKey, String strPublicKey) {
 
@@ -320,10 +319,10 @@ public class MainActivity extends Activity {
 		StringBuilder infoDataSB = new StringBuilder();
 		infoDataSB.append(serviceId).append(SEP_SYMBOL);
 
-		// ƒfƒxƒƒbƒpIDˆø”‚ğ’Ç‰Á
+		// ãƒ‡ãƒ™ãƒ­ãƒƒãƒ‘IDå¼•æ•°ã‚’è¿½åŠ 
 		infoDataSB.append(developId).append(SEP_SYMBOL);
 
-		// ƒ‰ƒCƒZƒ“ƒXƒL[ˆø”‚ğ’Ç‰Á
+		// ãƒ©ã‚¤ã‚»ãƒ³ã‚¹ã‚­ãƒ¼å¼•æ•°ã‚’è¿½åŠ 
 		infoDataSB.append(strLicenseKey);
 
 		String strEncryInfoData = "";
