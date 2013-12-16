@@ -70,7 +70,8 @@ public class MainActivity extends Activity {
 	//次回決済ＩＤ
 	private String nextTransactionId;
 	// BroadcastReceiver(決済後）
-	private AppmartReceiver receiver;
+	private AppmartReceiver receiver;	
+	//サービスをバインドするためのserviceConnectionインスタンス
 	private ServiceConnection mConnection;
 	
 	public static final String RESULT_CODE = "resultCode";
