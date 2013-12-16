@@ -70,7 +70,8 @@ public class MainActivity extends Activity {
 	//次回決済ＩＤ
 	private String nextTransactionId;
 	// BroadcastReceiver(決済後）
-	private AppmartReceiver receiver;	
+	private AppmartReceiver receiver;
+	private ServiceConnection mConnection;
 	
 	public static final String RESULT_CODE = "resultCode";
 	public static final String RESULT_KEY = "resultKey";
@@ -102,8 +103,9 @@ public class MainActivity extends Activity {
 			return;
 		}
 
-		// Service Connectionオブジェクト
-		ServiceConnection mConnection = new ServiceConnection() {
+		// Service Connectionインスタンス化
+		mConnection = new ServiceConnection() {
+			
 			//接続時実行
 			public void onServiceConnected(ComponentName name,
 					IBinder boundService) {
@@ -118,7 +120,7 @@ public class MainActivity extends Activity {
 			}
 		};
 
-		// bindServiceを使ってサービスに接続
+		// bindServiceを利用し、サービスに接続
 		try {
 			bindService(i, mConnection, Context.BIND_AUTO_CREATE);
 		} catch (Exception e) {
@@ -226,7 +228,7 @@ public class MainActivity extends Activity {
 		super.onDestroy();
 
 		// appmartサービスからアンバインド
-		unbindService((ServiceConnection) service);
+		unbindService(mConnection);
 		service = null;
 
 		// broadcast停止
