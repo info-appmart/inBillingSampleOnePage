@@ -1,62 +1,90 @@
-Appmart　アプリ内課金
-======================
+# Appmart　アプリ内課金
 
-Appmartアプリ内課金システムのサンプルコードです。このサンプルをfork・cloneしていただき、自由にご利用ください。 (apache 2.0ライセンス)
+![last-version](http://img.shields.io/badge/last%20version-1.1-green.svg "last version:1.1") 
 
-Pull requestも可能です。
+![license apache 2.0](http://img.shields.io/badge/license-apache%202.0-brightgreen.svg "licence apache 2.0")
+
+Appmartアプリ内課金システムのサンプルコードです。このサンプルをfork・cloneしていただき、自由にご利用ください。 
 
 このサンプルの対象サービスは:
 
-| 処理                         | 決済タイプ                | 管理           |
-| ------------- |:-------------:| ------: |
-| 決済実行処理         | 都度                        | 管理対象    |
-| 決済実行処理         | 継続                        | 管理対象    |
-| 決済実行処理         | 都度                        | 管理対象外|
-| 決済実行処理         | 継続                        | 管理対象外|
-
-
-
-
-> 管理されているサービスに関しまして、ソースコードをご確認ください。
++ アプリ内課金：都度決済 
++ アプリ内課金：継続決済 
 
 
 ---
 
 
-## 引数の設定
+## Ready-to-useサンプル
 
-下記引数を直してください。 (src/activities/MainActivity.java)
+本リポジトリをcloneし、5つのパラメータを直してください
 
+
+> サンプルをclone
+
+```shell
+cd /home/user/mydirectory
+git clone https://github.com/info-appmart/inBillingSampleOnePage.git
 ```
+
+> プロジェクトのパラメータを修正
+
+
+```java
+//　ファイル：src/activities/MainActivity.java
+
 //デベロッパＩＤ
 APPMART_DEVELOPER_ID = "your_developper_id";
-
 //ライセンスキー
 APPMART_LICENSE_KEY = "your_licence_key";
-
 //公開鍵
 APPMART_PUBLIC_KEY = "your_public_key";
-
 //アプリＩＤ
 APPMART_APP_ID = "your_application_id";
-
 // サービスＩＤ
 public static final String APPMART_SERVICE_ID = "your_service_id";
 ```
-
 
 ---
 
 
 ## 本プロジェクトの大まかな流れ：
 
- *  AIDLファイルの生成:
+### 設定+サービス接続
+
++ AIDLファイルの生成
++ パーミッション追加
++ 決済実行後のBroadcastを設定
++ Appmartアプリに接続+インストール状態を確認
++ ServiceConnectionオブジェクト作成
++ ボタンと連動するhandlerを定義
++ ボタンの実装
+
+### サービスとのやり取り
+
++ Appmartとの連動
++ アプリのバインド
++ パラメータの暗号化
++ PendingIntentの実行
++ Broadcast情報を取得
++ 決済確定
  
+---
+
+
+### 設定+サービス接続
+
+
+####  AIDLファイルの生成
+
 Appmartの課金システムサービスとやりとりするために、AIDLファイルを作成する必要があります。
  
-jp.app_mart.serviceパッケージを作り、AppmartInBillingInterface.aidlファイルを作ってください。
+| package名              | class名                        |
+| ---------------------- |------------------------------- |
+|  jp.app_mart.service   |　AppmartInBillingInterface.aidl |
+
  
-```
+```java
 package jp.app_mart.service;
 
 import android.os.Bundle;
@@ -79,7 +107,7 @@ interface AppmartInBillingInterface {
     String getNextPaymentDetails(String nextTrnsId, String developerId, String itemId);
 
     //継続課金の停止
-    String stopContinuePayment(String nextTrnsId, String developerId, String itemId);
+    String stopContinuePayment(String nextTrnsId, String developerId, String itemId, String appId);
     
     //指定ユーザーの購入履歴（管理対象サービスのみ）
     int hasAlreadyBought (String developerId, String appId, String itemId);
@@ -89,22 +117,29 @@ interface AppmartInBillingInterface {
 
 > 必ず上記7つのメソッドを用意してください 。メソッドの引数・戻り値は【リファレンス】を参照してください。
 
- *  パーミッション追加:
 
 
-```
+#### パーミッション追加
+
+appmartを利用するには下記permissionsを追加してください。
+
+> AndroidManifest.xml
+
+```xml
 <!-- 課金API用 -->
 <uses-permission android:name="jp.app_mart.permissions.APPMART_BILLING" />
 ```
 
 
- *  決済実行後のBroadcastを設定:
+##### 決済実行後のBroadcastを設定
  
-これからの修正はMainActivityクラス内に行います。
- 
-決済画面からアプリに戻る際に、Broadcastが発信されるため、ReceiverBroadcastをRegisterします。
 
-```
+> これからの修正はMainActivityクラス内に行います。
+ 
+
+決済画面からアプリに戻る際に、Broadcastが発信されるため、**ReceiverBroadcast**をRegisterします。
+
+```java
 setReceiver();
 
 private void setReceiver() {
@@ -115,9 +150,9 @@ private void setReceiver() {
 ``` 
 
 
- * Appmartアプリに接続し、インストール状態を確認:
+#### Appmartアプリに接続+インストール状態を確認
  
-```
+```java
 Intent i = new Intent();
 i.setClassName(APP_PACKAGE, APP_PATH);
 if (mContext.getPackageManager().queryIntentServices(i, 0).isEmpty()) {
@@ -127,11 +162,13 @@ if (mContext.getPackageManager().queryIntentServices(i, 0).isEmpty()) {
 ```
  
  
- * ServiceConnectionオブジェクトを用意:
+#### ServiceConnectionオブジェクト作成
  
-RemoteServiceのため、ServiceConnectionインタフェースを実装しなければなりません。継承メソッドはonServiceConnected（接続時のcallback）とonServiceDisconnected（切断持のcallback）です。
+RemoteServiceのため、**ServiceConnection**インタフェースを実装しなければなりません。
+
+継承メソッドは**onServiceConnected**(接続時のcallback)と**onServiceDisconnected**(切断持のcallback）です。
  
-```
+```java
 ServiceConnection mConnection = new ServiceConnection() {
 	//接続時実行
 	public void onServiceConnected(ComponentName name,
@@ -148,11 +185,11 @@ ServiceConnection mConnection = new ServiceConnection() {
 ```
  
 
- * ボタンと連動するするhandlerを定義
+#### ボタンと連動するhandlerを定義
 
 ボタンをクリックする際に、別threadでデータ処理を行うため、MainUIのHandlerを用意します。
 
-```
+```java
 handler = new Handler() {
    public void handleMessage(Message msg) {
 	//処理はここに入ります
@@ -160,37 +197,37 @@ handler = new Handler() {
 }
 ```
 
- * ボタンの実装
+#### ボタンの実装
  
-実際にボタンを押下する時に、
+> ボタンが押された時に処理
  
-```
-
+```java
 Button paymentButton = (Button) findViewById(R.id.access_payment);
 paymentButton.setOnClickListener(new OnClickListener() {
 	//処理はここに入ります
 }
 ```
 
-
 ---
 
 
-## Appmart課金システムとの具体的な連動
+### サービスとのやり取り
 
- * Appmartとの連動：
+#### Appmartとの連動
  
 アプリとAppmartを連動させるために、先ずはバインドを行います。
  
-`bindService(i, mConnection, Context.BIND_AUTO_CREATE);`
-
-
-
- * アプリのバインド:
- 
-ServiceConnectionが正常に接続すれば、接続フラグをyesに変え、Serviceをバインドします
-
+```java
+bindService(i, mConnection, Context.BIND_AUTO_CREATE);
 ```
+
+
+#### アプリのバインド
+ 
+**ServiceConnection**が正常に接続すれば、接続フラグをyesに変え、Serviceをバインドします。
+
+
+```java
 service = AppmartInBillingInterface.Stub.asInterface((IBinder) boundService);
 isConnected = true;
 ```
@@ -198,13 +235,12 @@ isConnected = true;
 > この時点ではAppmartの課金決済サービスと連動しており、AIDLインタフェースの各メソッドを呼ぶことができます。
 
 
-
- * パラメータの暗号化:
+#### パラメータの暗号化
  
-決済を行う際には必要なパラメータを暗号化し、【prepareForBillingService】メソッドに渡します。
+決済を行う際には必要なパラメータを暗号化し、**prepareForBillingService**メソッドに渡します。
  
  
-```
+```java
 String dataEncrypted = createEncryptedData(
 	APPMART_SERVICE_ID,
 	APPMART_DEVELOPER_ID,
@@ -213,39 +249,37 @@ String dataEncrypted = createEncryptedData(
 Bundle bundleForPaymentInterface = service.prepareForBillingService(APPMART_APP_ID, dataEncrypted);
 ```
 
-> 【createEncryptedData】メソッドはクラスの一番下にありますので、ご参考ください。
+> **createEncryptedData**メソッドはクラスの一番下にありますので、ご参考ください。
 
 
-【prepareForBillingService】メソッドからreturnされるBundleを確認します。
+**prepareForBillingService**メソッドからreturnされるBundleを確認します。
 
-【resultCode】コードは1でしたら、　決済キー【resultKey】を保存し、BundleのPendingIntentオブジェクトをインスタンス化し、実行します。
+*resultCode*コードは1でしたら、　決済キー*resultKey*を保存し、Bundleの**PendingIntent**オブジェクトをインスタンス化し、実行します。
 
 
-
- * 【PendingIntent】の実行:
+####  【PendingIntent】の実行
  
-```
+```java
 resultKey= bundleForPaymentInterface.getString(RESULT_KEY);
 pIntent = bundleForPaymentInterface.getParcelable(PENDING);
 pIntent.send(mContext, 0, new Intent());
 ```
 
-PendingIntentを送信すると、Appmartアプリが起動し、決済画面が表示されます。エンドユーザーにデータ入力して、決済を行います。
+**PendingIntent**を送信すると、Appmartアプリが起動し、決済画面が表示されます。エンドユーザーにデータ入力して、決済を行います。
 
 決済が完了になりましたら、Broadcastが自動的に送信され、Appmartアプリが終了し、アプリに戻ります。
 
 
- * Broadcast情報を取得:
+#### Broadcast情報を取得
  
 配信された情報を取得します。決済IDが一致するかを確認します。
 
-```
+```java
 transactionId = arg1.getExtras().getString(SERVICE_ID);
 String resultKeyCurrentStransaction= arg1.getExtras().getString(APPMART_RESULT_KEY);
 
-// 継続決済の場合は次回決済ＩＤを取得
+// 継続決済の場合は次回決済IDを取得
 nextTransactionId = arg1.getExtras().getString(SERVICE_NEXT_ID);
-
 
 if (resultKeyCurrentStransaction!=null && resultKeyCurrentStransaction.equals(resultKey)){
   //エンドユーザーにコンテンツを提供
@@ -253,12 +287,11 @@ if (resultKeyCurrentStransaction!=null && resultKeyCurrentStransaction.equals(re
 ```
 
 
-
- * 決済確定
+####  決済確定
  
 この時点では決済が登録されましたが、まだ確定されていないので、最後に決済を確定します。
  
-```
+```java
 //決済を確認します
 int res = service.confirmFinishedTransaction(
 		transactionId, APPMART_SERVICE_ID,
@@ -419,11 +452,6 @@ int res = service.confirmFinishedTransaction(
 
 
 
-
-
-
-
-
 ##### 　【stopContinuePayment】メソッド
 
 > 継続課金の場合のみ
@@ -435,6 +463,7 @@ int res = service.confirmFinishedTransaction(
 | 1   | nextTransactionId         | 13 | 次回トランザクションID                       |
 | 2   | developerId | 8 | ディベロッパーID    |
 | 3   | itemId | 1 - 30  | 登録済みのサービスID    |
+| 4   | appId | 1 - 30  | 登録済みのアプリID    |
 
 > 暗号化パラメータの詳細はcreateEncryptedDataメソッドをご確認ください。
 
