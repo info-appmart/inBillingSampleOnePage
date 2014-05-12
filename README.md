@@ -42,7 +42,7 @@ APPMART_PUBLIC_KEY = "your_public_key";
 //アプリＩＤ
 APPMART_APP_ID = "your_application_id";
 // サービスＩＤ
-public static final String APPMART_SERVICE_ID = "your_service_id";
+APPMART_SERVICE_ID = "your_service_id";
 ```
 
 ---
