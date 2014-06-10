@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Appmart sample code</string>
-    <string name="hello_world">Appmart内部課金システムのサンプルコードです。</string>
-    <string name="button_value">課金システムへアクセス</string>
-    <string name="button2_value">ステータス確認</string>
-    <string name="action_settings">Settings</string>
-    <string name="success">決済が確認されました！</string>
-    
-    <string name="no_appmart_installed">Appmartがインストールされていません。</string>
-    <string name="appmart_connection_success">Appmartサービスの接続が成功しました。</string>
-    <string name="appmart_connection_not_possible">Appmartに接続できませんでした。</string>
+	<string name="app_name">Appmart sample code</string>
+	<string name="hello_world">Appmart内部課金システムのサンプルコードです。</string>
+	<string name="button_value">課金システムへアクセス</string>
+	<string name="button2_value">ステータス確認</string>
+	<string name="action_settings">Settings</string>
+	<string name="success">決済が確認されました！</string>
+	
+	<string name="no_appmart_installed">Appmartがインストールされていません。</string>
+	<string name="appmart_connection_success">Appmartサービスの接続が成功しました。</string>
+	<string name="appmart_connection_not_possible">Appmartに接続できませんでした。</string>
 	<string name="wrong_parameters">渡されたパラメータが正しくありません。</string>
 	<string name="exception_occured">例外が発生しました。</string>
 	<string name="settlement_not_confirmed">決済確認とれませんでした。</string>
