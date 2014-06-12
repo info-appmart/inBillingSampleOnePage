@@ -339,7 +339,7 @@ int res = service.confirmFinishedTransaction(
 > 暗号化パラメータの詳細はcreateEncryptedDataメソッドをご確認ください。
 
 
-#####　戻り値
+#####　戻り値 (json)
 
 | No  | 項目名               | サブ項目名        | 説明                                                                               |
 | --- |:----------: | ---------- |--------------------------------------|
@@ -379,7 +379,7 @@ int res = service.confirmFinishedTransaction(
 
 > 暗号化パラメータの詳細はcreateEncryptedDataメソッドをご確認ください。
 
-##### 戻り値
+##### 戻り値 (json)
 
 | No  | 項目名               | サブ項目名        | 説明                                                                               |
 | --- |:----------: | ---------- |--------------------------------------|
@@ -399,7 +399,7 @@ int res = service.confirmFinishedTransaction(
 
 > 暗号化パラメータの詳細はcreateEncryptedDataメソッドをご確認ください。
 
-#####　戻り値
+#####　戻り値 (json)
 
 | No  | 項目名               | サブ項目名        | 説明                                                                               |
 | --- |:----------: | ---------- |--------------------------------------|
@@ -424,7 +424,7 @@ int res = service.confirmFinishedTransaction(
 
 > 暗号化パラメータの詳細はcreateEncryptedDataメソッドをご確認ください。
 
-#####　戻り値
+#####　戻り値 (json)
 
 | No  | 項目名               | サブ項目名        | 説明                                                                               |
 | --- |:----------: | ---------- |--------------------------------------|
@@ -449,7 +449,7 @@ int res = service.confirmFinishedTransaction(
 
 > 暗号化パラメータの詳細はcreateEncryptedDataメソッドをご確認ください。
 
-##### 戻り値
+##### 戻り値 (json)
 
 | No  | 項目名               | サブ項目名        | 説明                                                                               |
 | --- |:----------: | ---------- |--------------------------------------|
@@ -469,7 +469,7 @@ int res = service.confirmFinishedTransaction(
 
 > 暗号化パラメータの詳細はcreateEncryptedDataメソッドをご確認ください。
 
-##### 戻り値
+##### 戻り値 (json)
 
 | No  | 項目名               | サブ項目名        | 説明                                                                               |
 | --- |:----------: | ---------- |--------------------------------------|
