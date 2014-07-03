@@ -484,13 +484,13 @@ int res = service.confirmFinishedTransaction(
 
 ```java
 Intent intent = new Intent("jp.app_mart.app.LOGIN_ACTIVITY");
-startActivityForResult(intent, "1111");
+startActivityForResult(intent, 1111);
 return null;
 
 ////
 /* ログイン後　呼び出されるメソッド */
 protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-  if (requestCode == "1111" ) {
+  if (requestCode == 1111 ) {
     if(resultCode == RESULT_OK){      
 	  Utils.debug(mContext, "ログインしました！");		    	 
 	}		    
