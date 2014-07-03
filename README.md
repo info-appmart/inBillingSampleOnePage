@@ -456,15 +456,15 @@ int res = service.confirmFinishedTransaction(
 | 1   | String | -          |  JSON形式のトランザクション情報 |
 
 
-#### 　hasAlreadyBought(購入履歴確認)
+#### 　hasAlreadyBought (購入履歴確認)
 
 #####　引数
 
-| No  | 項目名                     | 属性        |  説明                                                                            |
-| --- |:-------------:| ------ | ------------------------------------ |
-| 1   | appId         | 1 - 30 | アプリID                       |
-| 2   | developerId | 8 | ディベロッパーID    |
-| 3   | itemId | 1 - 30  | 登録済みのサービスID    |
+| No  | 項目名                     | 属性        |  説明      |
+| --- |:---------------:| ------ | -------------------------- |
+| 1   | developerId     | 8      | ディベロッパーID           |
+| 2   | appId           | 1 - 30 | アプリID                   |
+| 3   | itemId          | 1 - 30 | 登録済みのサービスID        |
 
 
 > 暗号化パラメータの詳細はcreateEncryptedDataメソッドをご確認ください。
