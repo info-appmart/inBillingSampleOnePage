@@ -42,7 +42,7 @@ APPMART_PUBLIC_KEY = "your_public_key";
 //アプリＩＤ
 APPMART_APP_ID = "your_application_id";
 // サービスＩＤ
-public static final String APPMART_SERVICE_ID = "your_service_id";
+APPMART_SERVICE_ID = "your_service_id";
 ```
 
 ---
@@ -339,7 +339,7 @@ int res = service.confirmFinishedTransaction(
 > 暗号化パラメータの詳細はcreateEncryptedDataメソッドをご確認ください。
 
 
-#####　戻り値
+#####　戻り値 (json)
 
 | No  | 項目名               | サブ項目名        | 説明                                                                               |
 | --- |:----------: | ---------- |--------------------------------------|
@@ -379,7 +379,7 @@ int res = service.confirmFinishedTransaction(
 
 > 暗号化パラメータの詳細はcreateEncryptedDataメソッドをご確認ください。
 
-##### 戻り値
+##### 戻り値 (json)
 
 | No  | 型 |  説明       |
 | --- |:----------: | ---------- |
@@ -398,7 +398,7 @@ int res = service.confirmFinishedTransaction(
 
 > 暗号化パラメータの詳細はcreateEncryptedDataメソッドをご確認ください。
 
-#####　戻り値
+#####　戻り値 (json)
 
 | No  | 項目名               | サブ項目名        | 説明                                                                               |
 | --- |:----------: | ---------- |--------------------------------------|
@@ -423,7 +423,7 @@ int res = service.confirmFinishedTransaction(
 
 > 暗号化パラメータの詳細はcreateEncryptedDataメソッドをご確認ください。
 
-#####　戻り値
+#####　戻り値 (json)
 
 | No  | 項目名               | サブ項目名        | 説明                                                                               |
 | --- |:----------: | ---------- |--------------------------------------|
@@ -448,27 +448,27 @@ int res = service.confirmFinishedTransaction(
 
 > 暗号化パラメータの詳細はcreateEncryptedDataメソッドをご確認ください。
 
-##### 戻り値
+##### 戻り値 (json)
 
 | No  | 項目名               | サブ項目名        | 説明                                                                               |
 | --- |:----------: | ---------- |--------------------------------------|
 | 1   | String | -          |  JSON形式のトランザクション情報 |
 
 
-#### 　hasAlreadyBought(購入履歴確認)
+#### 　hasAlreadyBought (購入履歴確認)
 
 #####　引数
 
-| No  | 項目名                     | 属性        |  説明                                                                            |
-| --- |:-------------:| ------ | ------------------------------------ |
-| 1   | appId         | 1 - 30 | アプリID                       |
-| 2   | developerId | 8 | ディベロッパーID    |
-| 3   | itemId | 1 - 30  | 登録済みのサービスID    |
+| No  | 項目名                     | 属性        |  説明      |
+| --- |:---------------:| ------ | -------------------------- |
+| 1   | developerId     | 8      | ディベロッパーID           |
+| 2   | appId           | 1 - 30 | アプリID                   |
+| 3   | itemId          | 1 - 30 | 登録済みのサービスID        |
 
 
 > 暗号化パラメータの詳細はcreateEncryptedDataメソッドをご確認ください。
 
-##### 戻り値
+##### 戻り値 (json)
 
 | No  | 項目名               | サブ項目名        | 説明                                                                               |
 | --- |:----------: | ---------- |--------------------------------------|
@@ -483,13 +483,13 @@ int res = service.confirmFinishedTransaction(
 
 ```java
 Intent intent = new Intent("jp.app_mart.app.LOGIN_ACTIVITY");
-startActivityForResult(intent, "1111");
+startActivityForResult(intent, 1111);
 return null;
 
 ////
 /* ログイン後　呼び出されるメソッド */
 protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-  if (requestCode == "1111" ) {
+  if (requestCode == 1111 ) {
     if(resultCode == RESULT_OK){      
 	  Utils.debug(mContext, "ログインしました！");		    	 
 	}		    
