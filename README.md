@@ -379,7 +379,7 @@ int res = service.confirmFinishedTransaction(
 
 > 暗号化パラメータの詳細はcreateEncryptedDataメソッドをご確認ください。
 
-##### 戻り値 (json)
+##### 戻り値 (int)
 
 | No  | 型 |  説明       |
 | --- |:----------: | ---------- |
