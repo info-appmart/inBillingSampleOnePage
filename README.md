@@ -347,7 +347,7 @@ int res = service.confirmFinishedTransaction(
 | 2   | Application | developId  |  ディベロッパーID                         |
 | 3   |             | itemId  |  サービスID                             |
 | 4   |             | serviceName|  サービス名                                                                    |
-| 5   |             | DiscountPrice|  Appmartでの販売価格 (セール期間考慮済み)  |
+| 5   |             | discountPrice|  Appmartでの販売価格 (セール期間)  |
 | 6   |             | exp|  サービス説明                                                                  |
 | 7   |             | policy|  サービスのポリシー                                                                 |
 | 8   |             | appName|  アプリ名                                                                 |
@@ -359,7 +359,6 @@ int res = service.confirmFinishedTransaction(
 | 14   |             | discountStartDt|  割引開始日                                                                |
 | 15   |             | discountEndDt|  割引終了日                                                                |
 | 16   |             | discountRate|  割引率                                                                |
-| 17   |             | logoImagePath|  ロゴファイル名                                                                |
 | 18   |             | SetlType|  販売タイプ 0=都度　 1==月額課金                                                                |
 | 19   |             | Price|  定価                                                            |
 
