@@ -347,7 +347,7 @@ int res = service.confirmFinishedTransaction(
 | 2   | Application | developId  |  ディベロッパーID                         |
 | 3   |             | itemId  |  サービスID                             |
 | 4   |             | serviceName|  サービス名                                                                    |
-| 5   |             | DiscountAmount|  Appmartでの販売価格 (セール期間考慮済み)  |
+| 5   |             | DiscountPrice|  Appmartでの販売価格 (セール期間考慮済み)  |
 | 6   |             | exp|  サービス説明                                                                  |
 | 7   |             | policy|  サービスのポリシー                                                                 |
 | 8   |             | appName|  アプリ名                                                                 |
