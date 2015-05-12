@@ -343,7 +343,7 @@ int res = service.confirmFinishedTransaction(
 
 | No  | 項目名               | サブ項目名        | 説明                                                                               |
 | --- |:----------: | ---------- |--------------------------------------|
-| 1   | Result_code | -          |  1== OK  55=暗号化データエラー   90=例外発生  |
+| 1   | ResultCode | -          |  1== OK  55=暗号化データエラー   90=例外発生  |
 | 2   | Application | developId  |  ディベロッパーID                         |
 | 3   |             | itemId  |  サービスID                             |
 | 4   |             | serviceName|  サービス名                                                                    |
@@ -400,7 +400,7 @@ int res = service.confirmFinishedTransaction(
 
 | No  | 項目名               | サブ項目名        | 説明                                                                               |
 | --- |:----------: | ---------- |--------------------------------------|
-| 1   | Result_code | -          |  1== OK  90=例外発生  |
+| 1   | ResultCode | -          |  1== OK  90=例外発生  |
 | 2   |  Application| amount  |  決済金額                      |
 | 3   |  Application| setlDt  | 決済日時                     |
 | 5   |  Application| setlCrcy  |  通貨                     |
@@ -425,7 +425,7 @@ int res = service.confirmFinishedTransaction(
 
 | No  | 項目名               | サブ項目名        | 説明                                                                               |
 | --- |:----------: | ---------- |--------------------------------------|
-| 1   | Result_code | -          |  1== OK  90=例外発生  |
+| 1   | ResultCode | -          |  1== OK  90=例外発生  |
 | 2   | transactionId | -          |  トランザクションID  |
 | 3   | nextTransLogId | -          |  次回トランザクションID  |
 
@@ -470,7 +470,7 @@ int res = service.confirmFinishedTransaction(
 
 | No  | 項目名               | サブ項目名        | 説明                                                                               |
 | --- |:----------: | ---------- |--------------------------------------|
-| 1   | Result_code | -          |  1== OK  90=例外発生  |
+| 1   | ResultCode | -          |  1== OK  90=例外発生  |
 | 2   | buyFlg | -          |  購入フラッグ 1== 購入済み　0==未購入  |
 | 3   | msg | -          |  エラーメッセージのID  |
 
