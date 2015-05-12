@@ -352,15 +352,14 @@ int res = service.confirmFinishedTransaction(
 | 7   |             | policy|  サービスのポリシー                                                                 |
 | 8   |             | appName|  アプリ名                                                                 |
 | 9   |             | setlCrcy|  通貨                                                                |
-| 10   |             | SetlType|  販売タイプ   0=都度　1=月額課金                                                                |
-| 11   |             | MonthCycle|  月サイクル                                                                |
-| 12   |             | DayCycle|  日サイクル                                                                |
-| 13   |             | CntCycle|  継続回数                                                                |
-| 14   |             | discountStartDt|  割引開始日                                                                |
-| 15   |             | discountEndDt|  割引終了日                                                                |
-| 16   |             | discountRate|  割引率                                                                |
-| 18   |             | SetlType|  販売タイプ 0=都度　 1==月額課金                                                                |
-| 19   |             | Price|  定価                                                            |
+| 10   |             | setlType|  販売タイプ   0=都度　1=月額課金                                |
+| 11   |             | monthCycle|  月サイクル                                                                |
+| 12   |             | cntCycle|  継続回数                                                                |
+| 13   |             | discountStartDt|  割引開始日                                                                |
+| 14   |             | discountEndDt|  割引終了日                                                                |
+| 15   |             | discountRate|  割引率                                                                |
+| 16   |             | setlType|  販売タイプ 0=都度　 1==月額課金         |
+| 17   |             | price|  定価                                                            |
 
 >  nullの場合、接続エラーが発生します。Bundle.getInt(“resultCode”) == 90 の場合は【Msg】もリターンされます（1= アプリIDエラー, 90=暗号化データエラー）
 
